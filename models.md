@@ -10,9 +10,62 @@ For each class, make the toString and copyWith methods.
 
 For each class, the hierarchy of classes is marked with this syntax : "ClassA (Is a ClassB)" where class A should extend class B with a result of code as is : `class ClassA extends ClassB {}`.
 
+For each class, enum are marked with this syntax : "ClassA (Is an enum)" where class A should be an enum with this result of code : `enum ClassA`.
+Enums will have a list of types marked with "### Types" : "## EnumType (Is an enum) ### Description description of the enum ### Types a,b,c ### Parameters 1.String toString " will produce this code : "enum EnumType {a(toString: "A"), b(toString: "B"), c(toString: "C"); const EnumType({required this.toString}); final String toString;}". The toString parameter is an example here and should be replaced by the correct parameters in the list of parameters, like with classic classes.
+
 ---
 
 Specific to this app :
+
+## MovieThumbnail
+
+### Description
+
+Assemble informations needed to display a thumbnail of the movie/Serie on the homepage.
+
+### Parameters
+
+1. bool isAdult
+
+2. int tmdbId
+
+3. List<Genre> genres
+
+4. String portraitSourceImage
+
+## Genre (Is an enum)
+
+### Description
+
+The category of the movie or tvShow. Can be "Action", "Adventure", etc.
+
+### Types
+
+action, adventure, documentary
+
+### Parameters
+
+1. int id
+
+2. GenreType type
+
+Type of the genre : is either a movie or a tv show.
+
+3. String title
+
+## GenreType
+
+### Description
+
+Type of the genre : is either a movie or a tv show.
+
+### Types
+
+movie, tvShow
+
+### Parameters
+
+None
 
 ## Movie
 

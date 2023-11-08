@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_clone/data/tmdb_api/movie_service.dart';
+import 'package:netflix_clone/data/tmdb_api/tmdb_api_service.dart';
 import 'package:netflix_clone/data/tmdb_api/tmdb_custom_dio.dart';
 
 void main() => runApp(const MyApp());
@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 result = dto.results.toString();
               });
             },
-            child: const Text("makeCall"),
+            child: const Text("call"),
           ),
           Text(
             result,

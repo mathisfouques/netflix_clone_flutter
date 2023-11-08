@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'movie_service.dart';
+part of 'tmdb_api_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator

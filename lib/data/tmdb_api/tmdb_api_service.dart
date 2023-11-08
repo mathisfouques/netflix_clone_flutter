@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 
 import '../../models/dto/movie_list_dto.dart';
 
-part 'movie_service.g.dart';
+part 'tmdb_api_service.g.dart';
 
 @RestApi(baseUrl: "https://api.themoviedb.org/3")
 abstract class TmdbApiService {

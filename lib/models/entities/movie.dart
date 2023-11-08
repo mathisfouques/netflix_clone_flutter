@@ -38,7 +38,7 @@ class Movie extends Equatable {
   /// A flag indicating if the user has already watched the movie.
   final bool isWatched;
 
-  Movie({
+  const Movie({
     required this.title,
     required this.description,
     required this.genres,
