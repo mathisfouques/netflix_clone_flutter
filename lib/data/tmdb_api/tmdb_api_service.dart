@@ -1,3 +1,4 @@
+import 'package:netflix_clone/models/dto/genre_list_dto.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
@@ -20,4 +21,10 @@ abstract class TmdbApiService {
   Future<MovieListDto> getPopularMovieList({
     @Query("page") required int pageNumber,
   });
+
+  @GET("/genre/tv/list")
+  Future<GenreListDto> getGenreTvList();
+
+  @GET("/genre/movie/list")
+  Future<GenreListDto> getGenreMovieList();
 }

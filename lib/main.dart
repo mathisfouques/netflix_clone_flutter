@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/data/tmdb_api/tmdb_api_service.dart';
 import 'package:netflix_clone/data/tmdb_api/tmdb_custom_dio.dart';
+import 'package:netflix_clone/models/dto/genre_dto.dart';
+
+import 'models/entities/genre.dart';
 
 void main() => runApp(const MyApp());
 
@@ -41,13 +44,37 @@ class _HomeScreenState extends State<HomeScreen> {
               //   pageNumber: 3,
               //   withGenres: "Action",
               // );
-              final dto =
-                  await tmdbApiService.getPopularMovieList(pageNumber: 1);
+              // final dto =
+              //     await tmdbApiService.getPopularMovieList(pageNumber: 1);
+              final tvDto = await tmdbApiService.getGenreTvList();
+              final movieDto = await tmdbApiService.getGenreMovieList();
 
-              dto.results.map((res) => res.toJson()).forEach(print);
+              print("Tv:\n");
+              movieDto.genres.map((e) => e.toJson()).forEach(print);
+              print('\nMovies:\n');
+              tvDto.genres.map((res) => res.toJson()).forEach(print);
+
+              final genres = <Genre>[];
+
+              for (GenreDto genreDto in tvDto.genres) {
+                genres.add(Genre(
+                  title: genreDto.name,
+                  id: genreDto.id,
+                  type: GenreType.tvShow,
+                ));
+              }
+              for (GenreDto genreDto in movieDto.genres) {
+                genres.add(Genre(
+                  title: genreDto.name,
+                  id: genreDto.id,
+                  type: GenreType.movie,
+                ));
+              }
+
+              genres.forEach(print);
 
               setState(() {
-                result = dto.results.toString();
+                result = tvDto.genres.toString();
               });
             },
             child: const Text("call"),

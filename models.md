@@ -33,19 +33,17 @@ Assemble informations needed to display a thumbnail of the movie/Serie on the ho
 
 4. String portraitSourceImage
 
-## Genre (Is an enum)
+## Genre
 
 ### Description
 
-The category of the movie or tvShow. Can be "Action", "Adventure", etc.
-
-### Types
-
-action, adventure, documentary
+The genre of the movie or tvShow. Can be "Action", "Adventure", etc. Refers the id of the genre.
 
 ### Parameters
 
 1. int id
+
+Id of the genre in tmdb databse.
 
 2. GenreType type
 
@@ -53,7 +51,9 @@ Type of the genre : is either a movie or a tv show.
 
 3. String title
 
-## GenreType
+Name of the genre (english)
+
+## GenreType (Is an enum)
 
 ### Description
 
@@ -62,10 +62,6 @@ Type of the genre : is either a movie or a tv show.
 ### Types
 
 movie, tvShow
-
-### Parameters
-
-None
 
 ## Movie
 
