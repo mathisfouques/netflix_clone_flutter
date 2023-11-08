@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:netflix_clone/models/dto/movie_result_dto.dart';
+
+import '../dto/movie_result_dto.dart';
 
 part 'movie_list_dto.g.dart';
 

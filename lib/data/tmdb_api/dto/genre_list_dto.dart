@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:netflix_clone/models/dto/genre_dto.dart';
+
+import '../dto/genre_dto.dart';
 
 part 'genre_list_dto.g.dart';
 

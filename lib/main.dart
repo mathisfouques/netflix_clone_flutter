@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_clone/data/tmdb_api/tmdb_api_service.dart';
-import 'package:netflix_clone/data/tmdb_api/tmdb_custom_dio.dart';
-import 'package:netflix_clone/models/dto/genre_dto.dart';
 
-import 'models/entities/genre.dart';
+import 'data/tmdb_api/tmdb_api_service.dart';
+import 'data/tmdb_api/tmdb_custom_dio.dart';
+import 'data/tmdb_api/dto/genre_dto.dart';
+import 'domain/entities/genre.dart';
 
 void main() => runApp(const MyApp());
 

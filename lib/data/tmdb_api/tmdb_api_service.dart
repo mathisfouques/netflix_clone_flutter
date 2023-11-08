@@ -1,8 +1,8 @@
-import 'package:netflix_clone/models/dto/genre_list_dto.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
-import '../../models/dto/movie_list_dto.dart';
+import 'dto/movie_list_dto.dart';
+import 'dto/genre_list_dto.dart';
 
 part 'tmdb_api_service.g.dart';
 
