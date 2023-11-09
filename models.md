@@ -17,6 +17,22 @@ Enums will have a list of types marked with "### Types" : "## EnumType (Is an en
 
 Specific to this app :
 
+---
+
+## CategoryMovies
+
+### Description
+
+Contains a list of movies that corresponds to the proper genre in the class
+
+### Parameters
+
+1. bool isAdult
+
+2. List<MovieThumbnail>
+
+3. Genre genre
+
 ## MovieThumbnail
 
 ### Description

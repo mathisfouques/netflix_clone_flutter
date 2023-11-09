@@ -6,13 +6,13 @@ part 'movie_list_dto.g.dart';
 
 @JsonSerializable()
 class MovieListDto {
-  @JsonKey(name: "page")
+  @JsonKey(name: "page", defaultValue: 1)
   final int page;
-  @JsonKey(name: "results")
+  @JsonKey(name: "results", defaultValue: [])
   final List<MovieResultDto> results;
-  @JsonKey(name: "total_pages")
+  @JsonKey(name: "total_pages", defaultValue: 10)
   final int totalPages;
-  @JsonKey(name: "total_results")
+  @JsonKey(name: "total_results", defaultValue: 100)
   final int totalResults;
 
   MovieListDto({

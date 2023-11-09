@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tmdb_api_service.dart';
+part of 'tmdb_api_data_source.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'tmdb_api_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _TmdbApiService implements TmdbApiService {
-  _TmdbApiService(
+class _TmdbApiDataSource implements TmdbApiDataSource {
+  _TmdbApiDataSource(
     this._dio, {
     this.baseUrl,
   }) {
@@ -31,7 +31,7 @@ class _TmdbApiService implements TmdbApiService {
       r'with_genres': withGenres,
     };
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<MovieListDto>(Options(
       method: 'GET',
@@ -58,7 +58,7 @@ class _TmdbApiService implements TmdbApiService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'page': pageNumber};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<MovieListDto>(Options(
       method: 'GET',
@@ -85,7 +85,7 @@ class _TmdbApiService implements TmdbApiService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<GenreListDto>(Options(
       method: 'GET',
@@ -112,7 +112,7 @@ class _TmdbApiService implements TmdbApiService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<GenreListDto>(Options(
       method: 'GET',

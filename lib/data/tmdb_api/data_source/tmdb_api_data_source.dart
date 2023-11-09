@@ -1,16 +1,17 @@
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
-import 'dto/movie_list_dto.dart';
-import 'dto/genre_list_dto.dart';
+import '../dto/movie_list_dto.dart';
+import '../dto/genre_list_dto.dart';
 
-part 'tmdb_api_service.g.dart';
+part 'tmdb_api_data_source.g.dart';
 
 @RestApi(baseUrl: "https://api.themoviedb.org/3")
-abstract class TmdbApiService {
-  factory TmdbApiService(Dio dio, {String baseUrl}) = _TmdbApiService;
+abstract class TmdbApiDataSource {
+  factory TmdbApiDataSource(Dio dio, {String baseUrl}) = _TmdbApiDataSource;
 
   /// On with_genres, tmdb uses comma ( , ) for AND , pipe ( | ) for OR
+  /// Can use ids instead of full string for genres.
   @GET('/discover/movie')
   Future<MovieListDto> getMovieList({
     @Query("page") required int pageNumber,
