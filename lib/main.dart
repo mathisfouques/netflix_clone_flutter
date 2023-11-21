@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netflix_clone/presentation/cubit/home_cubit.dart';
+import 'presentation/cubit/home_cubit.dart';
 
 import 'data/tmdb_api/data_source/tmdb_api_data_source.dart';
 import 'data/tmdb_api/movie_tmdb_api_repository.dart';

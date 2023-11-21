@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-import 'package:netflix_clone/colors.dart';
-import 'package:netflix_clone/domain/entities/category_movies.dart';
-import 'package:netflix_clone/domain/entities/movie_thumbnail.dart';
-import 'package:netflix_clone/list_extension.dart';
-import 'package:netflix_clone/presentation/cubit/home_cubit.dart';
+import '../colors.dart';
+import '../domain/entities/category_movies.dart';
+import '../domain/entities/movie_thumbnail.dart';
+import '../list_extension.dart';
+import 'cubit/home_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

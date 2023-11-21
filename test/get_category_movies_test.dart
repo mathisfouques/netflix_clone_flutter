@@ -1,4 +1,3 @@
-import 'package:either_dart/either.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:netflix_clone/data/tmdb_api/movie_tmdb_api_repository.dart';
 import 'package:netflix_clone/domain/entities/genre.dart';
@@ -41,7 +40,7 @@ void main() {
     test(
         'GIVEN a data source successful but too much categories requested, EXPECT a UseCaseError with type tooMuchCategories WHEN calling usecase.',
         () async {
-      final repo = MovieTmdbApiRepository(dataSource: MockTmdbApiDataSource());
+      final repo = MovieTmdbApiRepository(dataSource: const MockTmdbApiDataSource());
       final usecase = GetCategoryMoviesUseCase(
         repository: repo,
         numberOfCategories: 100,
@@ -56,7 +55,7 @@ void main() {
     test(
         'GIVEN a data source sucessful EXPECT 8 CategoryMovies with NotEmpty list of MovieThumbnails WHEN calling usecase.',
         () async {
-      final repo = MovieTmdbApiRepository(dataSource: MockTmdbApiDataSource());
+      final repo = MovieTmdbApiRepository(dataSource: const MockTmdbApiDataSource());
       final usecase = GetCategoryMoviesUseCase(
         repository: repo,
         forGenres: genresThatHaveAnApiResultMocked,

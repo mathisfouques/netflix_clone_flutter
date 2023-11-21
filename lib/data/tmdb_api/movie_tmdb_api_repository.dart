@@ -1,7 +1,6 @@
 import 'package:either_dart/either.dart';
 import 'package:dio/dio.dart';
 
-import 'dto/genre_list_dto.dart';
 import '../../domain/data_protocols/movie_data_protocol.dart';
 import '../../domain/entities/genre.dart';
 import '../../domain/entities/movie_thumbnail.dart';

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
-import 'package:netflix_clone/data/tmdb_api/movie_tmdb_api_repository.dart';
+import '../../data/tmdb_api/movie_tmdb_api_repository.dart';
 
 import '../../list_extension.dart';
 import '../data_protocols/movie_data_protocol.dart';

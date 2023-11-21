@@ -3,7 +3,6 @@ import 'package:netflix_clone/data/tmdb_api/data_source/tmdb_api_data_source.dar
 import 'package:netflix_clone/domain/data_protocols/movie_data_protocol.dart';
 import 'package:netflix_clone/domain/entities/genre.dart';
 import 'package:netflix_clone/domain/entities/movie_thumbnail.dart';
-import 'package:netflix_clone/list_extension.dart';
 
 import 'mock_tmdb_api_data_source.dart';
 

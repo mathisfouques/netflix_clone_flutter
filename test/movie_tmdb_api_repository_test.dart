@@ -1,6 +1,4 @@
-import 'dart:math';
 
-import 'package:either_dart/either.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:netflix_clone/data/tmdb_api/movie_tmdb_api_repository.dart';
@@ -18,7 +16,7 @@ extension CustomDioException on DioException {
 }
 
 void main() {
-  final dataSourceAllWorking = MockTmdbApiDataSource();
+  const dataSourceAllWorking = MockTmdbApiDataSource();
   group("\n[MOVIE_TMDB_API_REPO]", () {
     group('[GENRES]\n', () {
       test(
@@ -151,7 +149,7 @@ void main() {
           'GIVEN a data source that sends incorrect genreId EXPECT an Error of type empty results WHEN calling getMovieThumbnails',
           () async {
         final repo = MovieTmdbApiRepository(
-            dataSource: MockTmdbApiDataSource(
+            dataSource: const MockTmdbApiDataSource(
           movieResultsWithIncorrectGenreIds: true,
         ));
         const genre = Genre(id: 37, type: GenreType.movie, title: "?");
@@ -170,7 +168,7 @@ void main() {
           'GIVEN a data source that sends empty results EXPECT an error of type empty results WHEN calling getMovieThumbnails',
           () async {
         final repo = MovieTmdbApiRepository(
-            dataSource: MockTmdbApiDataSource(
+            dataSource: const MockTmdbApiDataSource(
           movieEmptyResults: true,
         ));
         const genre = Genre(id: 37, type: GenreType.movie, title: "?");

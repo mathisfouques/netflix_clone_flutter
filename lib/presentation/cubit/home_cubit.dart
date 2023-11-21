@@ -1,9 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:netflix_clone/data/tmdb_api/data_source/tmdb_api_data_source.dart';
-import 'package:netflix_clone/data/tmdb_api/tmdb_custom_dio.dart';
-import 'package:netflix_clone/domain/use_case/get_category_movies.dart';
 
+import '../../domain/use_case/get_category_movies.dart';
 import '../../data/tmdb_api/movie_tmdb_api_repository.dart';
 import '../../domain/entities/category_movies.dart';
 import '../../domain/entities/genre.dart';
