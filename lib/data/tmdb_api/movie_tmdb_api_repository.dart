@@ -1,5 +1,7 @@
-import 'package:netflix_clone/data/tmdb_api/dto/genre_list_dto.dart';
+import 'package:either_dart/either.dart';
+import 'package:dio/dio.dart';
 
+import 'dto/genre_list_dto.dart';
 import '../../domain/data_protocols/movie_data_protocol.dart';
 import '../../domain/entities/genre.dart';
 import '../../domain/entities/movie_thumbnail.dart';
@@ -7,6 +9,26 @@ import '../../list_extension.dart';
 import 'data_source/tmdb_api_data_source.dart';
 import 'dto/movie_list_dto.dart';
 import 'dto/movie_result_dto.dart';
+
+enum MovieTmdbApiErrorType { remote, emptyResults, cantRetrieveGenres }
+
+class MovieTmdbApiError implements MovieProtocolError {
+  final Object error;
+  final MovieTmdbApiErrorType type;
+  final Object? stackTrace;
+  final DioExceptionType? dioType;
+
+  const MovieTmdbApiError(
+    this.error,
+    this.type, {
+    this.stackTrace,
+    this.dioType,
+  });
+
+  @override
+  String toString() =>
+      "Error on TmdbApi : '$error' of type ${error.runtimeType}.\nCause: $stackTrace";
+}
 
 class MovieTmdbApiRepository implements MovieDataProtocol {
   final TmdbApiDataSource _dataSource;
@@ -21,23 +43,57 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
   // Question : Is it a good idea to have this here ?
   final Set<Genre> allGenres = {};
 
+  Future<Either<MovieTmdbApiError, T>> safe<T>(Future<T> request) async {
+    try {
+      return Right(await request);
+    } on DioException catch (e, stacktrace) {
+      return Left(MovieTmdbApiError(
+        e,
+        MovieTmdbApiErrorType.remote,
+        stackTrace: stacktrace,
+        dioType: e.type,
+      ));
+    } catch (e, stacktrace) {
+      return Left(MovieTmdbApiError(
+        e,
+        MovieTmdbApiErrorType.remote,
+        stackTrace: stacktrace,
+      ));
+    }
+  }
+
   @override
-  Future<List<MovieThumbnail>> getMovieThumbnails({
+  Future<Either<MovieProtocolError, List<MovieThumbnail>>> getMovieThumbnails({
     required Genre forGenre,
   }) async {
     if (allGenres.isEmpty) {
-      await getAllGenres();
+      final genresRes = await getAllGenres();
+      if (genresRes.isLeft) {
+        return Left(MovieTmdbApiError(
+          genresRes.left,
+          MovieTmdbApiErrorType.cantRetrieveGenres,
+          dioType: (genresRes.left as MovieTmdbApiError).dioType,
+        ));
+      }
     }
 
     final result = <MovieThumbnail>[];
-    final MovieListDto movieListDto = await _dataSource.getMovieList(
-      pageNumber: 1,
-      withGenres: forGenre.id.toString(),
-    );
 
-    // Question : Does this check belong to repository
+    final Either<MovieTmdbApiError, MovieListDto> response = await safe(
+      _dataSource.getMovieList(
+        pageNumber: 1,
+        withGenres: forGenre.id.toString(),
+      ),
+    );
+    if (response.isLeft) return Left(response.left);
+
+    final MovieListDto movieListDto = response.right;
+
     if (movieListDto.results.isEmpty) {
-      print("For genre : ${forGenre.title}, there are no results...");
+      return const Left(MovieTmdbApiError(
+        "Results from request are empty",
+        MovieTmdbApiErrorType.emptyResults,
+      ));
     }
 
     for (MovieResultDto movieDto in movieListDto.results) {
@@ -57,34 +113,49 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
       ));
     }
 
-    return result;
+    if (result.isEmpty) {
+      return const Left(MovieTmdbApiError(
+        "List of MovieThumbnail results are empty. Might be a mismatch of genreIds",
+        MovieTmdbApiErrorType.emptyResults,
+      ));
+    }
+
+    return Right(result);
   }
 
   @override
-  Future<List<Genre>> getAllGenres({GenreType? forType}) async {
+  Future<Either<MovieProtocolError, List<Genre>>> getAllGenres(
+      {GenreType? forType}) async {
     final genres = <Genre>[];
 
     if (forType == GenreType.movie || forType == null) {
-      final moviesGenres =
-          await _dataSource.getGenreMovieList().catchError(onErrorGetAllGenres);
-      genres.addAll(moviesGenres.genres.mapToList(
+      final moviesGenres = await safe(_dataSource.getGenreMovieList());
+      if (moviesGenres.isLeft) {
+        return Left(MovieTmdbApiError(
+          "Movie genres request failed",
+          MovieTmdbApiErrorType.remote,
+          dioType: moviesGenres.left.dioType,
+        ));
+      }
+
+      genres.addAll(moviesGenres.right.genres.mapToList(
           (dto) => Genre(id: dto.id, type: GenreType.movie, title: dto.name)));
     }
     if (forType == GenreType.tvShow || forType == null) {
-      final tvGenres =
-          await _dataSource.getGenreTvList().catchError(onErrorGetAllGenres);
-      genres.addAll(tvGenres.genres.mapToList(
+      final tvGenres = await safe(_dataSource.getGenreMovieList());
+      if (tvGenres.isLeft) {
+        return Left(MovieTmdbApiError(
+          "Movie genres request failed",
+          MovieTmdbApiErrorType.remote,
+          dioType: tvGenres.left.dioType,
+        ));
+      }
+
+      genres.addAll(tvGenres.right.genres.mapToList(
           (dto) => Genre(id: dto.id, type: GenreType.tvShow, title: dto.name)));
     }
     if (forType == null) allGenres.addAll(genres);
 
-    return genres;
-  }
-
-  Future<GenreListDto> onErrorGetAllGenres(Object? error) async {
-    print(error?.runtimeType);
-    print(error?.toString());
-
-    return GenreListDto(genres: []);
+    return Right(genres);
   }
 }

@@ -11,28 +11,30 @@ import '../../domain/entities/genre.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  final MovieTmdbApiRepository movieRepo = MovieTmdbApiRepository(
-      dataSource: TmdbApiDataSource(TmdbCustomDio().dio));
+  final MovieTmdbApiRepository movieRepo;
 
-  HomeCubit() : super(HomeInitial());
+  HomeCubit({required this.movieRepo}) : super(HomeInitial());
 
-  fetchMovies({GenreType? genreType}) async {
+  fetchMovies(
+      {GenreType? genreType,
+      List<Genre>? forGenres,
+      int? numberOfCategories}) async {
     emit(LoadingHomeFetchMovies());
-    try {
-      final GetCategoryMoviesUseCase getCategoryMoviesUseCase =
-          GetCategoryMoviesUseCase(
-        repository: movieRepo,
-        numberOfCategories: 10,
-        genreType: genreType,
-      );
 
-      final categoryMoviesList = await getCategoryMoviesUseCase();
+    final GetCategoryMoviesUseCase getCategoryMoviesUseCase =
+        GetCategoryMoviesUseCase(
+      repository: movieRepo,
+      numberOfCategories: numberOfCategories ?? 8,
+      genreType: genreType,
+      forGenres: forGenres,
+    );
 
-      emit(SuccessHomeFetchMovies(categories: categoryMoviesList));
-    } catch (e, stacktrace) {
-      final errorMessage = "Error in HomeCubit. $e : $stacktrace";
-      print(errorMessage);
-      emit(FailureHomeFetchMovies(errorMessage));
+    final useCaseResult = await getCategoryMoviesUseCase();
+
+    if (useCaseResult.isRight) {
+      emit(SuccessHomeFetchMovies(categories: useCaseResult.right));
+    } else {
+      emit(FailureHomeFetchMovies(useCaseResult.left));
     }
   }
 }

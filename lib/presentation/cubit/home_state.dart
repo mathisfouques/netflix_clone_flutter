@@ -24,7 +24,7 @@ final class SuccessHomeFetchMovies extends HomeFetchMovies {
 final class LoadingHomeFetchMovies extends HomeFetchMovies {}
 
 final class FailureHomeFetchMovies extends HomeFetchMovies {
-  final String reason;
+  final GetCategoryMoviesUseCaseError error;
 
-  const FailureHomeFetchMovies(this.reason);
+  const FailureHomeFetchMovies(this.error);
 }

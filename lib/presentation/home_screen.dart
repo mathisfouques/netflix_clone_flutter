@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
             case FailureHomeFetchMovies():
               return Center(
                   child: Text(
-                state.reason,
+                state.error.type.name,
                 style: const TextStyle(color: Colors.white),
               ));
           }
