@@ -21,7 +21,6 @@ class GetCategoryMoviesUseCase {
   Future<List<CategoryMovies>> call() async {
     final List<Genre> genresOfCorrectType =
         await repository.getAllGenres(forType: genreType);
-    print(genresOfCorrectType);
 
     assert(numberOfCategories < genresOfCorrectType.length);
 

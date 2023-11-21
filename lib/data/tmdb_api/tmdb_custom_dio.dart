@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
-const String tmdbApiKey = String.fromEnvironment("tmdbApiKey");
-const String tmdbAccessToken = String.fromEnvironment("tmdbAccessToken");
+const String _tmdbApiKey = String.fromEnvironment("tmdbApiKey");
+const String _tmdbAccessToken = String.fromEnvironment("tmdbAccessToken");
 
 class TmdbCustomDio {
   static final TmdbCustomDio _singleton = TmdbCustomDio._internal();
@@ -14,7 +14,7 @@ class TmdbCustomDio {
 
   late final Dio dio = Dio()..options.headers = headers;
   final Map<String, dynamic> headers = {
-    "Authorization": "Bearer $tmdbAccessToken",
+    "Authorization": "Bearer $_tmdbAccessToken",
     "accept": "application/json"
   };
 }

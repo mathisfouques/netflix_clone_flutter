@@ -46,3 +46,4 @@ app.*.map.json
 # scripts, environnement
 *.sh
 .env
+test/test_secrets.dart
