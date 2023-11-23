@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import 'package:netflix_clone_mocks/mock/mock_tmdb_api_data_source.dart';
+
 import '../../domain/use_case/get_category_movies.dart';
 import '../../data/tmdb_api/movie_tmdb_api_repository.dart';
 import '../../domain/entities/category_movies.dart';
@@ -13,10 +15,11 @@ class HomeCubit extends Cubit<HomeState> {
 
   HomeCubit({required this.movieRepo}) : super(HomeInitial());
 
-  fetchMovies(
-      {GenreType? genreType,
-      List<Genre>? forGenres,
-      int? numberOfCategories}) async {
+  fetchMovies({
+    GenreType? genreType,
+    List<Genre>? forGenres,
+    int? numberOfCategories,
+  }) async {
     emit(LoadingHomeFetchMovies());
 
     final GetCategoryMoviesUseCase getCategoryMoviesUseCase =
@@ -24,7 +27,7 @@ class HomeCubit extends Cubit<HomeState> {
       repository: movieRepo,
       numberOfCategories: numberOfCategories ?? 8,
       genreType: genreType,
-      forGenres: forGenres,
+      forGenres: MockTmdbApiDataSource.genresThatHaveAnApiResultMocked,
     );
 
     final useCaseResult = await getCategoryMoviesUseCase();

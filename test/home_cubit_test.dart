@@ -8,13 +8,8 @@ import 'package:netflix_clone/domain/entities/movie_thumbnail.dart';
 import 'package:netflix_clone/domain/use_case/get_category_movies.dart';
 import 'package:netflix_clone/list_extension.dart';
 import 'package:netflix_clone/presentation/cubit/home_cubit.dart';
+import 'package:netflix_clone_mocks/netflix_clone_mocks.dart';
 
-import 'mock/api_results/get_movie_list/get_movie_list_with_genre_12.dart';
-import 'mock/api_results/get_movie_list/get_movie_list_with_genre_28.dart';
-import 'mock/api_results/get_movie_list/get_movie_list_with_genre_36.dart';
-import 'mock/api_results/get_movie_list/get_movie_list_with_genre_37.dart';
-import 'mock/api_results/get_movie_list/get_movie_list_with_genre_53.dart';
-import 'mock/mock_tmdb_api_data_source.dart';
 import 'movie_tmdb_api_repository_test.dart';
 
 Map<String, dynamic> correctApiResultForGenreId(int id) {

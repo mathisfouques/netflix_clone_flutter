@@ -1,9 +1,9 @@
-
 import 'package:dio/dio.dart';
 
 import 'package:netflix_clone/data/tmdb_api/data_source/tmdb_api_data_source.dart';
 import 'package:netflix_clone/data/tmdb_api/dto/genre_list_dto.dart';
 import 'package:netflix_clone/data/tmdb_api/dto/movie_list_dto.dart';
+import 'package:netflix_clone/domain/entities/genre.dart';
 
 import 'api_results/get_genre_movie_list.dart';
 import 'api_results/get_genre_tv_list.dart';
@@ -26,6 +26,14 @@ class MockTmdbApiDataSource implements TmdbApiDataSource {
     this.movieEmptyResults = false,
     this.allGenresFailsWith,
   });
+
+  static get genresThatHaveAnApiResultMocked => <Genre>[
+        const Genre(id: 28, type: GenreType.movie, title: "?"),
+        const Genre(id: 53, type: GenreType.movie, title: "?"),
+        const Genre(id: 12, type: GenreType.movie, title: "?"),
+        const Genre(id: 37, type: GenreType.movie, title: "?"),
+        const Genre(id: 36, type: GenreType.movie, title: "?"),
+      ];
 
   @override
   Future<GenreListDto> getGenreMovieList() async {

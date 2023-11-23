@@ -1,10 +1,8 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:netflix_clone/data/tmdb_api/movie_tmdb_api_repository.dart';
 import 'package:netflix_clone/domain/entities/genre.dart';
-
-import 'mock/mock_tmdb_api_data_source.dart';
+import 'package:netflix_clone_mocks/netflix_clone_mocks.dart';
 
 extension CustomDioException on DioException {
   static badResponse() => DioException.badResponse(
