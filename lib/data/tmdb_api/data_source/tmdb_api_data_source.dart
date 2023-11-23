@@ -1,8 +1,8 @@
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
-import '../dto/movie_list_dto.dart';
-import '../dto/genre_list_dto.dart';
+import '../dto/genre/genre_list_dto.dart';
+import '../dto/movie_list/movie_list_dto.dart';
 
 part 'tmdb_api_data_source.g.dart';
 

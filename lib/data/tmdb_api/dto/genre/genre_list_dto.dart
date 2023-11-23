@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../dto/genre_dto.dart';
+import 'genre_dto.dart';
 
 part 'genre_list_dto.g.dart';
 

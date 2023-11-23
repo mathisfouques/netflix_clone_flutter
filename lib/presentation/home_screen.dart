@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:netflix_clone_mocks/mock/mock_tmdb_api_data_source.dart';
 
 import '../colors.dart';
 import '../domain/entities/category_movies.dart';
@@ -25,7 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: UiColors.darkGrey,
       body: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
         if (state is HomeInitial) {
-          context.read<HomeCubit>().fetchMovies();
+          context.read<HomeCubit>().fetchMovies(
+              forGenres: MockTmdbApiDataSource.genresThatHaveAnApiResultMocked);
 
           return Container();
         }

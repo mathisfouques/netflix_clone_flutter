@@ -31,7 +31,7 @@ class _TmdbApiDataSource implements TmdbApiDataSource {
       r'with_genres': withGenres,
     };
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<MovieListDto>(Options(
       method: 'GET',
@@ -58,7 +58,7 @@ class _TmdbApiDataSource implements TmdbApiDataSource {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'page': pageNumber};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<MovieListDto>(Options(
       method: 'GET',
@@ -85,7 +85,7 @@ class _TmdbApiDataSource implements TmdbApiDataSource {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<GenreListDto>(Options(
       method: 'GET',
@@ -112,7 +112,7 @@ class _TmdbApiDataSource implements TmdbApiDataSource {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<GenreListDto>(Options(
       method: 'GET',

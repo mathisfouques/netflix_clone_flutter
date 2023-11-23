@@ -7,12 +7,13 @@ part of 'movie_list_dto.dart';
 // **************************************************************************
 
 MovieListDto _$MovieListDtoFromJson(Map<String, dynamic> json) => MovieListDto(
-      page: json['page'] as int,
-      results: (json['results'] as List<dynamic>)
-          .map((e) => MovieResultDto.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      totalPages: json['total_pages'] as int,
-      totalResults: json['total_results'] as int,
+      page: json['page'] as int? ?? 1,
+      results: (json['results'] as List<dynamic>?)
+              ?.map((e) => MovieResultDto.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      totalPages: json['total_pages'] as int? ?? 10,
+      totalResults: json['total_results'] as int? ?? 100,
     );
 
 Map<String, dynamic> _$MovieListDtoToJson(MovieListDto instance) =>

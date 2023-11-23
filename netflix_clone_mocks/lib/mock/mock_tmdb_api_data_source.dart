@@ -28,11 +28,11 @@ class MockTmdbApiDataSource implements TmdbApiDataSource {
   });
 
   static get genresThatHaveAnApiResultMocked => <Genre>[
-        const Genre(id: 28, type: GenreType.movie, title: "?"),
-        const Genre(id: 53, type: GenreType.movie, title: "?"),
-        const Genre(id: 12, type: GenreType.movie, title: "?"),
-        const Genre(id: 37, type: GenreType.movie, title: "?"),
-        const Genre(id: 36, type: GenreType.movie, title: "?"),
+        const Genre(id: 28, type: GenreType.movie, title: "Action"),
+        const Genre(id: 53, type: GenreType.movie, title: "Thriller"),
+        const Genre(id: 12, type: GenreType.movie, title: "Adventure"),
+        const Genre(id: 37, type: GenreType.movie, title: "Western"),
+        const Genre(id: 36, type: GenreType.movie, title: "History"),
       ];
 
   @override

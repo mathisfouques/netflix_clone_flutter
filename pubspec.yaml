@@ -18,6 +18,8 @@ dependencies:
   cached_network_image: ^3.3.0
   gap: ^3.0.1
   either_dart: ^1.0.0
+
+  # Modules of this app
   netflix_clone_mocks:
     path: ./netflix_clone_mocks
 

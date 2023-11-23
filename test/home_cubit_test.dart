@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:netflix_clone/data/tmdb_api/dto/movie_list_dto.dart';
+import 'package:netflix_clone/data/tmdb_api/dto/movie_list/movie_list_dto.dart';
 import 'package:netflix_clone/data/tmdb_api/movie_tmdb_api_repository.dart';
 import 'package:netflix_clone/domain/entities/category_movies.dart';
 import 'package:netflix_clone/domain/entities/genre.dart';

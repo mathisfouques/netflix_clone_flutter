@@ -6,8 +6,8 @@ import '../../domain/entities/genre.dart';
 import '../../domain/entities/movie_thumbnail.dart';
 import '../../list_extension.dart';
 import 'data_source/tmdb_api_data_source.dart';
-import 'dto/movie_list_dto.dart';
-import 'dto/movie_result_dto.dart';
+import 'dto/movie_list/movie_list_dto.dart';
+import 'dto/movie_list/movie_result_dto.dart';
 
 enum MovieTmdbApiErrorType { remote, emptyResults, cantRetrieveGenres }
 
