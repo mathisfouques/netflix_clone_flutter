@@ -2,6 +2,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
 import '../dto/genre/genre_list_dto.dart';
+import '../dto/movie_details_dto.dart';
 import '../dto/movie_list/movie_list_dto.dart';
 
 part 'tmdb_api_data_source.g.dart';
@@ -28,4 +29,9 @@ abstract class TmdbApiDataSource {
 
   @GET("/genre/movie/list")
   Future<GenreListDto> getGenreMovieList();
+
+  @GET("/movie/{movie_id}")
+  Future<MovieDetailsDto> getMovieDetails({
+    @Path('movie_id') int movieId = 670292,
+  });
 }
