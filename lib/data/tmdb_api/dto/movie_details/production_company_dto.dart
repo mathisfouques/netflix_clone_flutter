@@ -7,7 +7,7 @@ class ProductionCompanyDto {
   @JsonKey(name: "id")
   final int id;
   @JsonKey(name: "logo_path")
-  final String logoPath;
+  final String? logoPath;
   @JsonKey(name: "name")
   final String name;
   @JsonKey(name: "origin_country")
