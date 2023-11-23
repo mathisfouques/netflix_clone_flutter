@@ -321,11 +321,9 @@ packages:
   netflix_clone:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: ef93384cb68dd83af1e18c0b35549a3b39a03f9b
-      url: "git@github.com:mathisfouques/netflix_clone_flutter.git"
-    source: git
+      path: ".."
+      relative: true
+    source: path
     version: "1.0.0+1"
   node_preamble:
     dependency: transitive

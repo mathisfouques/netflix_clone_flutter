@@ -79,7 +79,7 @@ Type of the genre : is either a movie or a tv show.
 
 movie, tvShow
 
-## Movie
+## MovieDetails
 
 ### Description
 
@@ -95,42 +95,10 @@ The title of the movie.
 
 A brief overview or description of the movie.
 
-3. List<String> genres
+3. List<Genre> genres
 
 Genres associated with the movie (e.g., action, comedy, drama, etc.).
 
-4. String director
-
-The director of the movie.
-
-5. int releaseYear
+4. int releaseYear
 
 The year the movie was released.
-
-6. double rating
-
-The movie's average user rating.
-
-7. String imageUrl
-
-The URL to the movie's poster or cover image.
-
-8. int duration
-
-The duration or runtime of the movie in minutes.
-
-9. List<String> cast
-
-List of actors or cast members associated with the movie.
-
-10. String videoUrl
-
-The URL to stream the movie or the actual video content.
-
-11. bool isFavorite
-
-A flag indicating if the movie has been marked as a favorite by the user.
-
-12. bool isWatched
-
-A flag indicating if the user has already watched the movie.

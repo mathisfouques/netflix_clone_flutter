@@ -197,5 +197,20 @@ void main() {
         expect(error.dioType, equals(DioExceptionType.badResponse));
       });
     });
+
+    group("[MOVIE_DETAILS]\n", () {
+      const correctMovieId = 670292; // The creator movie, used for mocking.
+
+      test(
+        'GIVEN a working data source EXPECT repository to return successfully WHEN calling getMovieDetails',
+        () async {
+          final repo = MovieTmdbApiRepository(dataSource: dataSourceAllWorking);
+
+          final result = await repo.getMovieDetails(forMovieId: correctMovieId);
+
+          expect(result.isRight, true);
+        },
+      );
+    });
   });
 }

@@ -3,17 +3,18 @@ import 'package:equatable/equatable.dart';
 import 'genre.dart';
 import 'movie_thumbnail.dart';
 
-/// Contains a list of movies that correspond to a specific genre.
+/// Contains a list of movies that corresponds to the proper genre in the class
+///
+/// Parameters:
+/// - `isAdult`: Indicates if the category contains adult content.
+/// - `movies`: A list of movie thumbnails.
+/// - `genre`: The genre of the movies in this category.
 class CategoryMovies extends Equatable {
-  /// Indicates whether the content is for adults.
   final bool isAdult;
-
-  /// List of movie thumbnails for this category.
   final List<MovieThumbnail> movies;
-
-  /// The genre associated with these movies.
   final Genre genre;
 
+  /// Constructor for `CategoryMovies`.
   const CategoryMovies({
     required this.isAdult,
     required this.movies,
@@ -24,10 +25,10 @@ class CategoryMovies extends Equatable {
   List<Object?> get props => [isAdult, movies, genre];
 
   @override
-  String toString() {
-    return 'CategoryMovies(isAdult: $isAdult, movies: $movies, genre: $genre)';
-  }
+  String toString() =>
+      'CategoryMovies(isAdult: $isAdult, movies: $movies, genre: $genre)';
 
+  /// Returns a copy of this `CategoryMovies` but with the given fields replaced with new values.
   CategoryMovies copyWith({
     bool? isAdult,
     List<MovieThumbnail>? movies,

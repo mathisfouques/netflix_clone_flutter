@@ -2,20 +2,20 @@ import 'package:equatable/equatable.dart';
 
 import 'genre.dart';
 
-/// Assemble information needed to display a thumbnail of the movie/Serie on the homepage.
+/// Assemble informations needed to display a thumbnail of the movie/Serie on the homepage.
+///
+/// Parameters:
+/// - `isAdult`: Indicates if the movie is for adults.
+/// - `tmdbId`: The movie's ID from TMDB.
+/// - `genres`: A list of genres the movie belongs to.
+/// - `portraitSourceImage`: The source URL for the movie's portrait image.
 class MovieThumbnail extends Equatable {
-  /// Indicates whether the content is for adults.
   final bool isAdult;
-
-  /// The ID of the movie on TMDb (The Movie Database).
   final int tmdbId;
-
-  /// List of genres associated with the movie.
   final List<Genre> genres;
-
-  /// The source URL for the portrait image of the movie.
   final String portraitSourceImage;
 
+  /// Constructor for `MovieThumbnail`.
   const MovieThumbnail({
     required this.isAdult,
     required this.tmdbId,
@@ -27,10 +27,10 @@ class MovieThumbnail extends Equatable {
   List<Object?> get props => [isAdult, tmdbId, genres, portraitSourceImage];
 
   @override
-  String toString() {
-    return 'MovieThumbnail(isAdult: $isAdult, tmdbId: $tmdbId, genres: $genres, portraitSourceImage: $portraitSourceImage)';
-  }
+  String toString() =>
+      'MovieThumbnail(isAdult: $isAdult, tmdbId: $tmdbId, genres: $genres, portraitSourceImage: $portraitSourceImage)';
 
+  /// Returns a copy of this `MovieThumbnail` but with the given fields replaced with new values.
   MovieThumbnail copyWith({
     bool? isAdult,
     int? tmdbId,

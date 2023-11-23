@@ -11,7 +11,8 @@ environment:
 dependencies:
   dio: any
   netflix_clone:
-    git: git@github.com:mathisfouques/netflix_clone_flutter.git
+    path: ./..
+    # git: git@github.com:mathisfouques/netflix_clone_flutter.git
 
 dev_dependencies:
   lints: ^2.0.0

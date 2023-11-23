@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 
 import '../../domain/data_protocols/movie_data_protocol.dart';
 import '../../domain/entities/genre.dart';
+import '../../domain/entities/movie_details.dart';
 import '../../domain/entities/movie_thumbnail.dart';
 import '../../list_extension.dart';
 import 'data_source/tmdb_api_data_source.dart';
@@ -156,5 +157,32 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
     if (forType == null) allGenres.addAll(genres);
 
     return Right(genres);
+  }
+
+  Future<Either<MovieProtocolError, MovieDetails>> getMovieDetails({
+    required int forMovieId,
+  }) async {
+    final movieDetails = await safe(
+      _dataSource.getMovieDetails(movieId: forMovieId),
+    );
+    if (movieDetails.isLeft) {
+      print(movieDetails.left.error.toString() +
+          movieDetails.left.stackTrace.toString());
+
+      return Left(MovieTmdbApiError(
+        movieDetails.left.error,
+        MovieTmdbApiErrorType.remote,
+      ));
+    }
+
+    final dto = movieDetails.right;
+
+    return Right(MovieDetails(
+      title: dto.title,
+      description: dto.overview,
+      genres: dto.genres.mapToList((genreDto) =>
+          Genre(id: genreDto.id, type: GenreType.movie, title: genreDto.name)),
+      releaseYear: dto.releaseDate.year,
+    ));
   }
 }

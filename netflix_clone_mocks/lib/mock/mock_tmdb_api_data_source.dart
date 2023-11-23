@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
 
 import 'package:netflix_clone/data/tmdb_api/data_source/tmdb_api_data_source.dart';
-import 'package:netflix_clone/data/tmdb_api/dto/genre_list_dto.dart';
-import 'package:netflix_clone/data/tmdb_api/dto/movie_list_dto.dart';
+import 'package:netflix_clone/data/tmdb_api/dto/genre/genre_list_dto.dart';
+import 'package:netflix_clone/data/tmdb_api/dto/movie_details/movie_details_dto.dart';
+import 'package:netflix_clone/data/tmdb_api/dto/movie_list/movie_list_dto.dart';
+
 import 'package:netflix_clone/domain/entities/genre.dart';
+import 'package:netflix_clone_mocks/mock/api_results/movie_details/get_movie_details_for_movie_670292.dart';
 
 import 'api_results/get_genre_movie_list.dart';
 import 'api_results/get_genre_tv_list.dart';
@@ -86,6 +89,14 @@ class MockTmdbApiDataSource implements TmdbApiDataSource {
   @override
   Future<MovieListDto> getPopularMovieList({required int pageNumber}) {
     // TODO: implement getPopularMovieList
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<MovieDetailsDto> getMovieDetails({int movieId = 670292}) async {
+    if (movieId == 670292) {
+      return MovieDetailsDto.fromJson(getMovieDetailsForMovie670292);
+    }
     throw UnimplementedError();
   }
 }
