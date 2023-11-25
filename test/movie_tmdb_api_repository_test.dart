@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:netflix_clone/data/tmdb_api/movie_tmdb_api_repository.dart';
 import 'package:netflix_clone/domain/entities/genre.dart';
+import 'package:netflix_clone/domain/entities/trailer.dart';
+import 'package:netflix_clone/list_extension.dart';
 import 'package:netflix_clone_mocks/netflix_clone_mocks.dart';
 
 extension CustomDioException on DioException {
@@ -199,18 +201,146 @@ void main() {
     });
 
     group("[MOVIE_DETAILS]\n", () {
-      const correctMovieId = 670292; // The creator movie, used for mocking.
-
       test(
         'GIVEN a working data source EXPECT repository to return successfully WHEN calling getMovieDetails',
         () async {
           final repo = MovieTmdbApiRepository(dataSource: dataSourceAllWorking);
 
-          final result = await repo.getMovieDetails(forMovieId: correctMovieId);
+          final result = await repo.getMovieDetails(
+              forMovieId:
+                  MovieTmdbRepositoryMockedCorrectValues.correctMovieId);
 
           expect(result.isRight, true);
+          expect(result.right,
+              MovieTmdbRepositoryMockedCorrectValues.correctMovieDetails);
         },
       );
+
+      test(
+        'GIVEN failing data source (for movieDetails) EXPECT an error of type remote WHEN calling getMovieDetails',
+        () async {
+          final repo = MovieTmdbApiRepository(
+              dataSource: MockTmdbApiDataSource(
+                  movieDetailsFailsWith: CustomDioException.badResponse()));
+
+          final result = await repo.getMovieDetails(
+              forMovieId:
+                  MovieTmdbRepositoryMockedCorrectValues.correctMovieId);
+
+          expect(result.isRight, false);
+          expect(result.left.runtimeType, MovieTmdbApiError);
+          expect(
+            (result.left as MovieTmdbApiError).type,
+            MovieTmdbApiErrorType.remote,
+          );
+        },
+      );
+
+      test(
+          'GIVEN working data source but getting an id missmatch between the sakked and the returned EXPECT an error with type idMissmatch WHEN calling getMovieDetails',
+          () async {
+        final repo = MovieTmdbApiRepository(
+            dataSource:
+                const MockTmdbApiDataSource(movieDetailsWithIdMissmatch: true));
+
+        final result = await repo.getMovieDetails(forMovieId: 670293);
+
+        expect(result.isRight, false);
+        expect(result.left.runtimeType, MovieTmdbApiError);
+        expect((result.left as MovieTmdbApiError).type,
+            MovieTmdbApiErrorType.idMissmatch);
+      });
+
+      group("[CREDITS] ", () {
+        test(
+          'GIVEN a working data source EXPECT to see credits with correct Id, and length of popularActors of 3, and correct credits WHEN getMovieCredits is called',
+          () async {
+            final repo =
+                MovieTmdbApiRepository(dataSource: dataSourceAllWorking);
+
+            final result = await repo.getMovieCredits(
+                forMovieId:
+                    MovieTmdbRepositoryMockedCorrectValues.correctMovieId);
+
+            expect(result.isRight, true);
+            expect(result.right.popularActors.length, 3);
+            expect(
+              result.right.forMovieId,
+              MovieTmdbRepositoryMockedCorrectValues.correctMovieId,
+            );
+
+            expect(result.right,
+                MovieTmdbRepositoryMockedCorrectValues.correctCredits);
+          },
+        );
+
+        test(
+          'GIVEN a failing data source (for credits) EXPECT a MovieTmdbApiError of type remote WHEN calling getMovieCredits',
+          () async {
+            final repo = MovieTmdbApiRepository(
+                dataSource: MockTmdbApiDataSource(
+                    movieCreditsFailsWith: CustomDioException.badResponse()));
+
+            final result = await repo.getMovieCredits(
+                forMovieId:
+                    MovieTmdbRepositoryMockedCorrectValues.correctMovieId);
+
+            expect(result.isRight, false);
+            expect(result.left.runtimeType, MovieTmdbApiError);
+            expect((result.left as MovieTmdbApiError).dioType,
+                DioExceptionType.badResponse);
+            expect((result.left as MovieTmdbApiError).type,
+                MovieTmdbApiErrorType.remote);
+          },
+        );
+      });
+
+      group("[TRAILERS]", () {
+        test(
+            'GIVEN a working data source EXPECT a successfull return WHEN getMovieTrailers is called',
+            () async {
+          final repo = MovieTmdbApiRepository(dataSource: dataSourceAllWorking);
+
+          final result = await repo.getMovieTrailers(
+              forMovieId:
+                  MovieTmdbRepositoryMockedCorrectValues.correctMovieId);
+
+          expect(result.isRight, true);
+          expect(result.right.length,
+              MovieTmdbRepositoryMockedCorrectValues.correctTrailers.length);
+
+          // Test the equality on the whole list :
+          bool forNowElementAreAllEqual = true;
+          for (Trailer element
+              in MovieTmdbRepositoryMockedCorrectValues.correctTrailers) {
+            if (result.right.doesNotContain(element)) {
+              // Entities extend Equatable
+              forNowElementAreAllEqual = false;
+            }
+          }
+          expect(forNowElementAreAllEqual, true);
+        });
+
+        test(
+          'GIVEN a failing data source for videos EXPECT  WHEN',
+          () async {
+            final repo = MovieTmdbApiRepository(
+                dataSource: MockTmdbApiDataSource(
+                    movieVideosFailsWith: CustomDioException.badResponse()));
+
+            final result = await repo.getMovieTrailers(
+                forMovieId:
+                    MovieTmdbRepositoryMockedCorrectValues.correctMovieId);
+
+            expect(result.isRight, false);
+            expect(result.left.runtimeType, MovieTmdbApiError);
+            expect((result.left as MovieTmdbApiError).dioType,
+                DioExceptionType.badResponse);
+            expect((result.left as MovieTmdbApiError).type,
+                MovieTmdbApiErrorType.remote);
+          },
+        );
+      });
     });
   });
 }

@@ -102,3 +102,51 @@ Genres associated with the movie (e.g., action, comedy, drama, etc.).
 4. int releaseYear
 
 The year the movie was released.
+
+5. int id
+
+Id of the movie.
+
+6. Credits? credits
+
+The credits of the movie. Can be null (for now ...) in case the credits call didn't work as expected.
+
+7. List<Trailer>? trailers
+
+The list of movie videos of type Trailer and coming from youtube
+
+## Credits
+
+### Description
+
+Encapsulates the director of the movie, as well as few of the most popular actors that played in the movie.
+
+### Parameters
+
+1. int forMovieId
+
+Id of the movie associated with the credits.
+
+2. String director
+
+The director of a movie
+
+3. List<String> popularActors
+
+Most popular actors playing in the movie, by name. Length should be at least 3.
+
+## Trailer
+
+### Description
+
+The trailer to show for one particular movie. Is generally linked to MovieDetails. In the future, on web, will be playing directly on the thumbnail ?
+
+### Parameters
+
+1. String name
+
+The name of the trailer.
+
+2. String youtubeKey
+
+The key to be able to show the youtube video. http://<yt>?v=<youtubeKey> (normalement)

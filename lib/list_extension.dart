@@ -2,6 +2,8 @@ extension IterableExtension<T> on Iterable<T> {
   bool doesNotContain(T element) => !contains(element);
 
   List<E> mapToList<E>(E Function(T) convert) => map(convert).toList();
+
+  List<T> whereToList(bool Function(T) test) => where(test).toList();
 }
 
 extension ListExtension<T> on List<T> {

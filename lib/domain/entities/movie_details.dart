@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 
+import 'credits.dart';
 import 'genre.dart';
+import 'trailer.dart';
 
 /// Assemble all information about one movie: date, realization, description, etc.
 ///
@@ -9,11 +11,17 @@ import 'genre.dart';
 /// - `description`: A brief overview or description of the movie.
 /// - `genres`: Genres associated with the movie (e.g., action, comedy, drama, etc.).
 /// - `releaseYear`: The year the movie was released.
+/// - `id`: Id of the movie.
+/// - `credits`: The credits of the movie. Can be null if the credits call didn't work as expected.
+/// - `trailers`: The list of movie videos of type Trailer and coming from YouTube. Can be null.
 class MovieDetails extends Equatable {
   final String title;
   final String description;
   final List<Genre> genres;
   final int releaseYear;
+  final int id;
+  final Credits? credits;
+  final List<Trailer>? trailers;
 
   /// Constructor for `MovieDetails`.
   const MovieDetails({
@@ -21,14 +29,18 @@ class MovieDetails extends Equatable {
     required this.description,
     required this.genres,
     required this.releaseYear,
+    required this.id,
+    this.credits,
+    this.trailers,
   });
 
   @override
-  List<Object?> get props => [title, description, genres, releaseYear];
+  List<Object?> get props =>
+      [title, description, genres, releaseYear, id, credits, trailers];
 
   @override
   String toString() =>
-      'MovieDetails(title: $title, description: $description, genres: $genres, releaseYear: $releaseYear)';
+      'MovieDetails(title: $title, description: $description, genres: $genres, releaseYear: $releaseYear, id: $id, credits: $credits, trailers: $trailers)';
 
   /// Returns a copy of this `MovieDetails` but with the given fields replaced with new values.
   MovieDetails copyWith({
@@ -36,12 +48,18 @@ class MovieDetails extends Equatable {
     String? description,
     List<Genre>? genres,
     int? releaseYear,
+    int? id,
+    Credits? credits,
+    List<Trailer>? trailers,
   }) {
     return MovieDetails(
       title: title ?? this.title,
       description: description ?? this.description,
       genres: genres ?? this.genres,
       releaseYear: releaseYear ?? this.releaseYear,
+      id: id ?? this.id,
+      credits: credits ?? this.credits,
+      trailers: trailers ?? this.trailers,
     );
   }
 }
