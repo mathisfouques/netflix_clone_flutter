@@ -11,6 +11,7 @@ import 'package:netflix_clone/domain/entities/genre.dart';
 import 'package:netflix_clone_mocks/mock/tmdb_api_results/movie_credits/get_movie_credits_for_movie_670292.dart';
 import 'package:netflix_clone_mocks/mock/tmdb_api_results/movie_details/get_movie_details_for_movie_550.dart';
 import 'package:netflix_clone_mocks/mock/tmdb_api_results/movie_details/get_movie_details_for_movie_670292.dart';
+import 'package:netflix_clone_mocks/mock/tmdb_api_results/movie_similar/get_similar_movies_for_movie_670292.dart';
 import 'package:netflix_clone_mocks/mock/tmdb_api_results/movie_videos/get_movie_videos_for_movie_670292.dart';
 
 import 'tmdb_api_results/get_genre_movie_list.dart';
@@ -31,6 +32,7 @@ class MockTmdbApiDataSource implements TmdbApiDataSource {
   final DioException? movieDetailsFailsWith;
   final DioException? movieCreditsFailsWith;
   final DioException? movieVideosFailsWith;
+  final DioException? similarMoviesFailsWith;
 
   const MockTmdbApiDataSource({
     this.dioException,
@@ -41,6 +43,7 @@ class MockTmdbApiDataSource implements TmdbApiDataSource {
     this.movieDetailsFailsWith,
     this.movieCreditsFailsWith,
     this.movieVideosFailsWith,
+    this.similarMoviesFailsWith,
   });
 
   static get genresThatHaveAnApiResultMocked => <Genre>[
@@ -132,5 +135,12 @@ class MockTmdbApiDataSource implements TmdbApiDataSource {
     if (movieVideosFailsWith != null) throw movieVideosFailsWith!;
 
     return MovieVideosDto.fromJson(getMovieVideosForMovie670292);
+  }
+
+  @override
+  Future<MovieListDto> getSimilarMovies({int movieId = 670292}) async {
+    if (similarMoviesFailsWith != null) throw similarMoviesFailsWith!;
+
+    return MovieListDto.fromJson(getSimilarMoviesForMovie670292);
   }
 }

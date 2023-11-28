@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import 'credits.dart';
 import 'genre.dart';
+import 'movie_thumbnail.dart';
 import 'trailer.dart';
 
 /// Assemble all information about one movie: date, realization, description, etc.
@@ -14,33 +15,44 @@ import 'trailer.dart';
 /// - `id`: Id of the movie.
 /// - `credits`: The credits of the movie. Can be null if the credits call didn't work as expected.
 /// - `trailers`: The list of movie videos of type Trailer and coming from YouTube. Can be null.
+/// - `similarMovies`: A list of MovieThumbnails that are similar to the movie. Can be null.
 class MovieDetails extends Equatable {
   final String title;
   final String description;
   final List<Genre> genres;
-  final int releaseYear;
+  final int? releaseYear;
   final int id;
   final Credits? credits;
   final List<Trailer>? trailers;
+  final List<MovieThumbnail>? similarMovies;
 
   /// Constructor for `MovieDetails`.
   const MovieDetails({
     required this.title,
     required this.description,
     required this.genres,
-    required this.releaseYear,
+    this.releaseYear,
     required this.id,
     this.credits,
     this.trailers,
+    this.similarMovies,
   });
 
   @override
-  List<Object?> get props =>
-      [title, description, genres, releaseYear, id, credits, trailers];
+  List<Object?> get props => [
+        title,
+        description,
+        genres,
+        releaseYear,
+        id,
+        credits,
+        trailers,
+        similarMovies
+      ];
 
   @override
   String toString() =>
-      'MovieDetails(title: $title, description: $description, genres: $genres, releaseYear: $releaseYear, id: $id, credits: $credits, trailers: $trailers)';
+      'MovieDetails(title: $title, description: $description, genres: $genres, releaseYear: $releaseYear, id: $id, credits: $credits, trailers: $trailers, similarMovies: $similarMovies)';
 
   /// Returns a copy of this `MovieDetails` but with the given fields replaced with new values.
   MovieDetails copyWith({
@@ -51,6 +63,7 @@ class MovieDetails extends Equatable {
     int? id,
     Credits? credits,
     List<Trailer>? trailers,
+    List<MovieThumbnail>? similarMovies,
   }) {
     return MovieDetails(
       title: title ?? this.title,
@@ -60,6 +73,7 @@ class MovieDetails extends Equatable {
       id: id ?? this.id,
       credits: credits ?? this.credits,
       trailers: trailers ?? this.trailers,
+      similarMovies: similarMovies ?? this.similarMovies,
     );
   }
 }

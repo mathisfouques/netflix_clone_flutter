@@ -40,7 +40,7 @@ class MovieDetailsDto {
   @JsonKey(name: "production_countries")
   final List<ProductionCountryDto> productionCountries;
   @JsonKey(name: "release_date")
-  final DateTime releaseDate;
+  final String releaseDate;
   @JsonKey(name: "revenue")
   final int revenue;
   @JsonKey(name: "runtime")

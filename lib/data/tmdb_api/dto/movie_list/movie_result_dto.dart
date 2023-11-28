@@ -34,7 +34,7 @@ class MovieResultDto {
   final String posterPath;
 
   @JsonKey(name: "release_date")
-  final DateTime releaseDate;
+  final String releaseDate;
 
   @JsonKey(name: "title")
   final String title;

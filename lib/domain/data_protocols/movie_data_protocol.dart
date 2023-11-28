@@ -37,4 +37,8 @@ abstract class MovieDataProtocol {
   Future<Either<MovieProtocolError, List<Trailer>>> getMovieTrailers({
     required int forMovieId,
   });
+
+  Future<Either<MovieProtocolError, List<MovieThumbnail>>> getSimilarMovies({
+    required int forMovieId,
+  });
 }

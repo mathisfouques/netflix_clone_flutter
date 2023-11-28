@@ -21,11 +21,6 @@ abstract class TmdbApiDataSource {
     @Query("with_genres") required String withGenres,
   });
 
-  @GET("/movie/popular")
-  Future<MovieListDto> getPopularMovieList({
-    @Query("page") required int pageNumber,
-  });
-
   @GET("/genre/tv/list")
   Future<GenreListDto> getGenreTvList();
 
@@ -44,6 +39,11 @@ abstract class TmdbApiDataSource {
 
   @GET("/movie/{movie_id}/videos")
   Future<MovieVideosDto> getMovieVideos({
+    @Path('movie_id') int movieId = 670292,
+  });
+
+  @GET("/movie/{movie_id}/videos")
+  Future<MovieListDto> getSimilarMovies({
     @Path('movie_id') int movieId = 670292,
   });
 }

@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-
 import '../../domain/use_case/get_category_movies.dart';
 import '../../data/tmdb_api/movie_tmdb_api_repository.dart';
 import '../../domain/entities/category_movies.dart';

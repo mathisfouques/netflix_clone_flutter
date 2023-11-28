@@ -145,6 +145,44 @@ void main() {
           },
         );
       });
+
+      group("[SIMILAR]", () {
+        test(
+            'GIVEN a working repo EXPECT a successful return WHEN calling usecase.',
+            () async {
+          final repo =
+              MovieTmdbApiRepository(dataSource: const MockTmdbApiDataSource());
+          final usecase = GetMovieDetailsUseCase(
+            movieId: MovieTmdbRepositoryMockedCorrectValues.correctMovieId,
+            repo: repo,
+          );
+
+          final result = await usecase();
+
+          expect(result.isRight, true);
+          expect(result.right.similarMovies != null, true);
+          expect(result.right.similarMovies,
+              MovieTmdbRepositoryMockedCorrectValues.correctSimilarMovies);
+        });
+
+        test(
+          'GIVEN a failing repo for credits EXPECT a successfull return but with null value on similarMovies WHEN calling usecase.',
+          () async {
+            final repo = MovieTmdbApiRepository(
+                dataSource: MockTmdbApiDataSource(
+                    similarMoviesFailsWith: CustomDioException.badResponse()));
+            final usecase = GetMovieDetailsUseCase(
+              movieId: MovieTmdbRepositoryMockedCorrectValues.correctMovieId,
+              repo: repo,
+            );
+
+            final result = await usecase();
+
+            expect(result.isRight, true);
+            expect(result.right.similarMovies, null);
+          },
+        );
+      });
     },
   );
 }

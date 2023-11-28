@@ -46,7 +46,7 @@ class GetMovieDetailsUseCase {
 
     final credits = await repo.getMovieCredits(forMovieId: movieId);
 
-    //TODO : Determine how to handle an error that is considered to be not really huge like this one.
+    // TODO : Determine how to handle an error that is considered to be not really huge like this one.
     if (credits.isRight) {
       movieDetails = movieDetails.copyWith(credits: credits.right);
     }
@@ -55,6 +55,12 @@ class GetMovieDetailsUseCase {
 
     if (trailers.isRight) {
       movieDetails = movieDetails.copyWith(trailers: trailers.right);
+    }
+
+    final similar = await repo.getSimilarMovies(forMovieId: movieId);
+
+    if (similar.isRight) {
+      movieDetails = movieDetails.copyWith(similarMovies: similar.right);
     }
 
     return Right(movieDetails);

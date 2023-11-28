@@ -99,9 +99,9 @@ A brief overview or description of the movie.
 
 Genres associated with the movie (e.g., action, comedy, drama, etc.).
 
-4. int releaseYear
+4. int? releaseYear
 
-The year the movie was released.
+The year the movie was released. Null when the result from the api is not correct.
 
 5. int id
 
@@ -114,6 +114,10 @@ The credits of the movie. Can be null (for now ...) in case the credits call did
 7. List<Trailer>? trailers
 
 The list of movie videos of type Trailer and coming from youtube
+
+8. List<MovieThumbnail>? similarMovies
+
+A list of MovieThumbnails that are similar to the movie.
 
 ## Credits
 

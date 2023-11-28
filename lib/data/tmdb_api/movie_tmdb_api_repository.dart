@@ -87,8 +87,6 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
       }
     }
 
-    final result = <MovieThumbnail>[];
-
     final Either<MovieTmdbApiError, MovieListDto> response = await safe(
       _dataSource.getMovieList(
         pageNumber: 1,
@@ -96,15 +94,15 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
       ),
     );
     if (response.isLeft) return Left(response.left);
-
-    final MovieListDto movieListDto = response.right;
-
-    if (movieListDto.results.isEmpty) {
+    if (response.right.results.isEmpty) {
       return const Left(MovieTmdbApiError(
         "Results from request are empty",
         MovieTmdbApiErrorType.emptyResults,
       ));
     }
+
+    final MovieListDto movieListDto = response.right;
+    final result = <MovieThumbnail>[];
 
     for (MovieResultDto movieDto in movieListDto.results) {
       // Question : Does this check belong to the repository.
@@ -113,14 +111,7 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
         continue;
       }
 
-      result.add(MovieThumbnail(
-        isAdult: movieDto.adult,
-        tmdbId: movieDto.id,
-        genres: movieDto.genreIds.mapToList(
-            (id) => allGenres.firstWhere((element) => element.id == id)),
-        portraitSourceImage:
-            _imageBaseUrl + _posterDefaultSize + movieDto.posterPath,
-      ));
+      result.add(mapThumbnailFromMovieResultDto(movieDto));
     }
 
     if (result.isEmpty) {
@@ -131,6 +122,18 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
     }
 
     return Right(result);
+  }
+
+  MovieThumbnail mapThumbnailFromMovieResultDto(MovieResultDto movieDto) {
+    return MovieThumbnail(
+      isAdult: movieDto.adult,
+      tmdbId: movieDto.id,
+      genres: movieDto.genreIds.mapToList(
+        (id) => allGenres.firstWhere((element) => element.id == id),
+      ),
+      portraitSourceImage:
+          _imageBaseUrl + _posterDefaultSize + movieDto.posterPath,
+    );
   }
 
   @override
@@ -191,7 +194,7 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
       description: dto.overview,
       genres: dto.genres.mapToList((genreDto) =>
           Genre(id: genreDto.id, type: GenreType.movie, title: genreDto.name)),
-      releaseYear: dto.releaseDate.year,
+      releaseYear: DateTime.tryParse(dto.releaseDate)?.year,
     ));
   }
 
@@ -208,7 +211,6 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
 
     String director = "Unknown";
     List<String> popularActors = [];
-    double thirdBestPopularity = 0;
 
     for (CrewDto crew in credits.right.crew) {
       if (crew.job == "Director") {
@@ -248,5 +250,33 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
         );
 
     return Right(youtubeTrailers);
+  }
+
+  @override
+  Future<Either<MovieProtocolError, List<MovieThumbnail>>> getSimilarMovies({
+    required int forMovieId,
+  }) async {
+    if (allGenres.isEmpty) {
+      final genresRes = await getAllGenres();
+      if (genresRes.isLeft) {
+        return Left(MovieTmdbApiError(
+          genresRes.left.error,
+          MovieTmdbApiErrorType.cantRetrieveGenres,
+          dioType: (genresRes.left as MovieTmdbApiError).dioType,
+        ));
+      }
+    }
+
+    final result =
+        await safe(_dataSource.getSimilarMovies(movieId: forMovieId));
+
+    if (result.isLeft) {
+      return Left(result.left);
+    }
+
+    final similarMovies =
+        result.right.results.mapToList(mapThumbnailFromMovieResultDto);
+
+    return Right(similarMovies);
   }
 }
