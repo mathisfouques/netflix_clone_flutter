@@ -7,7 +7,7 @@ import 'package:netflix_clone/domain/entities/genre.dart';
 import 'package:netflix_clone/domain/entities/movie_thumbnail.dart';
 import 'package:netflix_clone/domain/use_case/get_category_movies.dart';
 import 'package:netflix_clone/list_extension.dart';
-import 'package:netflix_clone/presentation/cubit/home_cubit.dart';
+import 'package:netflix_clone/presentation/movie_list_cubit/movie_list_cubit.dart';
 import 'package:netflix_clone_mocks/netflix_clone_mocks.dart';
 
 import 'movie_tmdb_api_repository_test.dart';
@@ -54,69 +54,69 @@ void main() {
           isAdult: false, movies: movieThumbnails, genre: genre);
     });
 
-    blocTest<HomeCubit, HomeState>(
+    blocTest<MovieListCubit, MovieListState>(
       'emits [Loading,Success] when fetchMovies is called.',
-      build: () => HomeCubit(
+      build: () => MovieListCubit(
         movieRepo: MovieTmdbApiRepository(
           dataSource: const MockTmdbApiDataSource(),
         ),
       ),
       act: (cubit) =>
           cubit.fetchMovies(forGenres: genresThatHaveAnApiResultMocked),
-      expect: () => <HomeState>[
-        LoadingHomeFetchMovies(),
-        SuccessHomeFetchMovies(
+      expect: () => <MovieListState>[
+        LoadingFetchingMovieList(),
+        SuccessFetchingMovieList(
             categories: categoryMoviesOfGenresThatHaveApiResultMocked)
       ],
     );
 
-    blocTest<HomeCubit, HomeState>(
+    blocTest<MovieListCubit, MovieListState>(
       'emits [Loading,Failure] when fetchMovies is called.',
-      build: () => HomeCubit(
+      build: () => MovieListCubit(
         movieRepo: MovieTmdbApiRepository(
           dataSource: const MockTmdbApiDataSource(),
         ),
       ),
       act: (cubit) => cubit.fetchMovies(numberOfCategories: 100),
-      expect: () => <HomeState>[
-        LoadingHomeFetchMovies(),
-        const FailureHomeFetchMovies(GetCategoryMoviesUseCaseError(
+      expect: () => <MovieListState>[
+        LoadingFetchingMovieList(),
+        const FailureFetchingMovieList(GetCategoryMoviesUseCaseError(
           "",
           CategoryMoviesErrorType.tooMuchCategories,
         ))
       ],
     );
 
-    blocTest<HomeCubit, HomeState>(
+    blocTest<MovieListCubit, MovieListState>(
       'emits [MyState] when fetchMovies is called.',
-      build: () => HomeCubit(
+      build: () => MovieListCubit(
         movieRepo: MovieTmdbApiRepository(
           dataSource: MockTmdbApiDataSource(
               allGenresFailsWith: CustomDioException.badResponse()),
         ),
       ),
       act: (cubit) => cubit.fetchMovies(),
-      expect: () => <HomeState>[
-        LoadingHomeFetchMovies(),
-        const FailureHomeFetchMovies(GetCategoryMoviesUseCaseError(
+      expect: () => <MovieListState>[
+        LoadingFetchingMovieList(),
+        const FailureFetchingMovieList(GetCategoryMoviesUseCaseError(
           "",
           CategoryMoviesErrorType.failingFetchingGenres,
         ))
       ],
     );
 
-    blocTest<HomeCubit, HomeState>(
+    blocTest<MovieListCubit, MovieListState>(
       'Given a repo that fails fetching movies emits [Loading,Failure] when fetchMovies is called.',
-      build: () => HomeCubit(
+      build: () => MovieListCubit(
         movieRepo: MovieTmdbApiRepository(
           dataSource: MockTmdbApiDataSource(
               dioException: CustomDioException.badResponse()),
         ),
       ),
       act: (cubit) => cubit.fetchMovies(),
-      expect: () => <HomeState>[
-        LoadingHomeFetchMovies(),
-        const FailureHomeFetchMovies(GetCategoryMoviesUseCaseError(
+      expect: () => <MovieListState>[
+        LoadingFetchingMovieList(),
+        const FailureFetchingMovieList(GetCategoryMoviesUseCaseError(
           "",
           CategoryMoviesErrorType.failingFetchingMovies,
         ))

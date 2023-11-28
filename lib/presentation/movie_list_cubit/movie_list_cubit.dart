@@ -6,19 +6,19 @@ import '../../data/tmdb_api/movie_tmdb_api_repository.dart';
 import '../../domain/entities/category_movies.dart';
 import '../../domain/entities/genre.dart';
 
-part 'home_state.dart';
+part 'movie_list_state.dart';
 
-class HomeCubit extends Cubit<HomeState> {
+class MovieListCubit extends Cubit<MovieListState> {
   final MovieTmdbApiRepository movieRepo;
 
-  HomeCubit({required this.movieRepo}) : super(HomeInitial());
+  MovieListCubit({required this.movieRepo}) : super(MovieListInitial());
 
   fetchMovies({
     GenreType? genreType,
     List<Genre>? forGenres,
     int? numberOfCategories,
   }) async {
-    emit(LoadingHomeFetchMovies());
+    emit(LoadingFetchingMovieList());
 
     final GetCategoryMoviesUseCase getCategoryMoviesUseCase =
         GetCategoryMoviesUseCase(
@@ -31,9 +31,9 @@ class HomeCubit extends Cubit<HomeState> {
     final useCaseResult = await getCategoryMoviesUseCase();
 
     if (useCaseResult.isRight) {
-      emit(SuccessHomeFetchMovies(categories: useCaseResult.right));
+      emit(SuccessFetchingMovieList(categories: useCaseResult.right));
     } else {
-      emit(FailureHomeFetchMovies(useCaseResult.left));
+      emit(FailureFetchingMovieList(useCaseResult.left));
     }
   }
 }

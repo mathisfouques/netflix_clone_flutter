@@ -103,12 +103,6 @@ class MockTmdbApiDataSource implements TmdbApiDataSource {
   }
 
   @override
-  Future<MovieListDto> getPopularMovieList({required int pageNumber}) {
-    // TODO: implement getPopularMovieList
-    throw UnimplementedError();
-  }
-
-  @override
   Future<MovieDetailsDto> getMovieDetails({int movieId = 670292}) async {
     if (movieDetailsFailsWith != null) throw movieDetailsFailsWith!;
 

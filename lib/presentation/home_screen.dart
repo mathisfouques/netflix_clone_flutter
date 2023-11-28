@@ -8,7 +8,7 @@ import '../colors.dart';
 import '../domain/entities/category_movies.dart';
 import '../domain/entities/movie_thumbnail.dart';
 import '../list_extension.dart';
-import 'cubit/home_cubit.dart';
+import 'movie_list_cubit/movie_list_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,31 +24,30 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: UiColors.darkGrey,
-      body: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
-        if (state is HomeInitial) {
-          context.read<HomeCubit>().fetchMovies(
-              forGenres: MockTmdbApiDataSource.genresThatHaveAnApiResultMocked);
-
-          return Container();
+      body: BlocBuilder<MovieListCubit, MovieListState>(
+          builder: (context, state) {
+        switch (state) {
+          case SuccessFetchingMovieList():
+            return CategoryMoviesListView(categories: state.categories);
+          case LoadingFetchingMovieList():
+            return const Center(
+                child: CircularProgressIndicator.adaptive(
+              backgroundColor: Colors.white,
+            ));
+          case FailureFetchingMovieList():
+            return Center(
+                child: Text(
+              state.error.type.name,
+              style: const TextStyle(color: Colors.white),
+            ));
+          default:
+            if (state is MovieListInitial) {
+              context.read<MovieListCubit>().fetchMovies(
+                  forGenres:
+                      MockTmdbApiDataSource.genresThatHaveAnApiResultMocked);
+            }
+            return Container();
         }
-        if (state is HomeFetchMovies) {
-          switch (state) {
-            case SuccessHomeFetchMovies():
-              return CategoryMoviesListView(categories: state.categories);
-            case LoadingHomeFetchMovies():
-              return const Center(
-                  child: CircularProgressIndicator.adaptive(
-                backgroundColor: Colors.white,
-              ));
-            case FailureHomeFetchMovies():
-              return Center(
-                  child: Text(
-                state.error.type.name,
-                style: const TextStyle(color: Colors.white),
-              ));
-          }
-        }
-        return Container();
       }),
     );
   }

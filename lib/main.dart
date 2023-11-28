@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netflix_clone_mocks/mock/mock_tmdb_api_data_source.dart';
-import 'presentation/cubit/home_cubit.dart';
+import 'presentation/cubit/movie_list_cubit.dart';
 
 import 'data/tmdb_api/movie_tmdb_api_repository.dart';
 import 'presentation/home_screen.dart';
@@ -30,7 +30,7 @@ class AppProviders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit(
+      create: (context) => MovieListCubit(
           movieRepo: MovieTmdbApiRepository(
         dataSource: const MockTmdbApiDataSource(),
       )),
