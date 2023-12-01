@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netflix_clone_mocks/mock/mock_tmdb_api_data_source.dart';
+import 'data/tmdb_api/data_source/tmdb_api_data_source.dart';
+import 'data/tmdb_api/tmdb_custom_dio.dart';
+import 'presentation/movie_details/movie_details_cubit.dart';
 import 'presentation/movie_list_cubit/movie_list_cubit.dart';
 
 import 'data/tmdb_api/movie_tmdb_api_repository.dart';
@@ -29,11 +32,20 @@ class AppProviders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MovieListCubit(
-          movieRepo: MovieTmdbApiRepository(
-        dataSource: const MockTmdbApiDataSource(),
-      )),
+    const mockedDataSource = MockTmdbApiDataSource();
+    final dataSource = TmdbApiDataSource(TmdbCustomDio().dio);
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => MovieListCubit(
+              movieRepo: MovieTmdbApiRepository(dataSource: mockedDataSource)),
+        ),
+        BlocProvider(
+          create: (context) => MovieDetailsCubit(
+              movieRepo: MovieTmdbApiRepository(dataSource: mockedDataSource)),
+        )
+      ],
       child: child,
     );
   }
