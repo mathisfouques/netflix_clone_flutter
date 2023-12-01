@@ -243,11 +243,8 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
 
     final youtubeTrailers = movieVideos.right.results
         .whereToList(
-          (element) => element.site == "YouTube" && element.type == "Trailer",
-        )
-        .mapToList(
-          (dto) => Trailer(name: dto.name, youtubeKey: dto.key),
-        );
+            (element) => element.site == "YouTube" && element.type == "Trailer")
+        .mapToList((dto) => Trailer(name: dto.name, youtubeKey: dto.key));
 
     return Right(youtubeTrailers);
   }

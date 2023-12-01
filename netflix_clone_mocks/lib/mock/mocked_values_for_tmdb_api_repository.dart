@@ -13,7 +13,7 @@ import 'package:netflix_clone_mocks/mock/tmdb_api_results/movie_similar/get_simi
 import 'package:netflix_clone_mocks/mock/tmdb_api_results/movie_videos/get_movie_videos_for_movie_670292.dart';
 import 'package:netflix_clone_mocks/netflix_clone_mocks.dart';
 
-abstract class MovieTmdbRepositoryMockedCorrectValues {
+abstract class MockedValuesForTmdbApiRepository {
   static final _imageBaseUrl = "https://image.tmdb.org/t/p/";
   static final _posterDefaultSize = "w185";
 

@@ -15,7 +15,7 @@ void main() {
         final repo =
             MovieTmdbApiRepository(dataSource: const MockTmdbApiDataSource());
         final usecase = GetMovieDetailsUseCase(
-          movieId: MovieTmdbRepositoryMockedCorrectValues.correctMovieId,
+          movieId: MockedValuesForTmdbApiRepository.correctMovieId,
           repo: repo,
         );
 
@@ -24,8 +24,7 @@ void main() {
         expect(result.isRight, true);
         expect(
           result.right.description,
-          MovieTmdbRepositoryMockedCorrectValues
-              .correctMovieDetails.description,
+          MockedValuesForTmdbApiRepository.correctMovieDetails.description,
         );
       });
 
@@ -36,7 +35,7 @@ void main() {
               dataSource: MockTmdbApiDataSource(
                   movieDetailsFailsWith: CustomDioException.badResponse()));
           late final usecase = GetMovieDetailsUseCase(
-            movieId: MovieTmdbRepositoryMockedCorrectValues.correctMovieId,
+            movieId: MockedValuesForTmdbApiRepository.correctMovieId,
             repo: repo,
           );
 
@@ -73,7 +72,7 @@ void main() {
             final repo = MovieTmdbApiRepository(
                 dataSource: const MockTmdbApiDataSource());
             final usecase = GetMovieDetailsUseCase(
-              movieId: MovieTmdbRepositoryMockedCorrectValues.correctMovieId,
+              movieId: MockedValuesForTmdbApiRepository.correctMovieId,
               repo: repo,
             );
 
@@ -83,7 +82,7 @@ void main() {
             expect(result.right.credits == null, false);
             expect(
               result.right.credits,
-              MovieTmdbRepositoryMockedCorrectValues.correctCredits,
+              MockedValuesForTmdbApiRepository.correctCredits,
             );
           },
         );
@@ -95,7 +94,7 @@ void main() {
                 dataSource: MockTmdbApiDataSource(
                     movieCreditsFailsWith: CustomDioException.badResponse()));
             final usecase = GetMovieDetailsUseCase(
-              movieId: MovieTmdbRepositoryMockedCorrectValues.correctMovieId,
+              movieId: MockedValuesForTmdbApiRepository.correctMovieId,
               repo: repo,
             );
 
@@ -114,7 +113,7 @@ void main() {
             final repo = MovieTmdbApiRepository(
                 dataSource: const MockTmdbApiDataSource());
             final usecase = GetMovieDetailsUseCase(
-              movieId: MovieTmdbRepositoryMockedCorrectValues.correctMovieId,
+              movieId: MockedValuesForTmdbApiRepository.correctMovieId,
               repo: repo,
             );
 
@@ -123,7 +122,7 @@ void main() {
             expect(result.isRight, true);
             expect(result.right.trailers != null, true);
             expect(result.right.trailers,
-                MovieTmdbRepositoryMockedCorrectValues.correctTrailers);
+                MockedValuesForTmdbApiRepository.correctTrailers);
           },
         );
 
@@ -134,7 +133,7 @@ void main() {
                 dataSource: MockTmdbApiDataSource(
                     movieVideosFailsWith: CustomDioException.badResponse()));
             final usecase = GetMovieDetailsUseCase(
-              movieId: MovieTmdbRepositoryMockedCorrectValues.correctMovieId,
+              movieId: MockedValuesForTmdbApiRepository.correctMovieId,
               repo: repo,
             );
 
@@ -153,7 +152,7 @@ void main() {
           final repo =
               MovieTmdbApiRepository(dataSource: const MockTmdbApiDataSource());
           final usecase = GetMovieDetailsUseCase(
-            movieId: MovieTmdbRepositoryMockedCorrectValues.correctMovieId,
+            movieId: MockedValuesForTmdbApiRepository.correctMovieId,
             repo: repo,
           );
 
@@ -162,7 +161,7 @@ void main() {
           expect(result.isRight, true);
           expect(result.right.similarMovies != null, true);
           expect(result.right.similarMovies,
-              MovieTmdbRepositoryMockedCorrectValues.correctSimilarMovies);
+              MockedValuesForTmdbApiRepository.correctSimilarMovies);
         });
 
         test(
@@ -172,7 +171,7 @@ void main() {
                 dataSource: MockTmdbApiDataSource(
                     similarMoviesFailsWith: CustomDioException.badResponse()));
             final usecase = GetMovieDetailsUseCase(
-              movieId: MovieTmdbRepositoryMockedCorrectValues.correctMovieId,
+              movieId: MockedValuesForTmdbApiRepository.correctMovieId,
               repo: repo,
             );
 

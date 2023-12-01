@@ -71,7 +71,7 @@ void main() {
     );
 
     blocTest<MovieListCubit, MovieListState>(
-      'emits [Loading,Failure] when fetchMovies is called.',
+      'emits [Loading,Failure] when fetchMovies is called WITH too much categories',
       build: () => MovieListCubit(
         movieRepo: MovieTmdbApiRepository(
           dataSource: const MockTmdbApiDataSource(),
@@ -88,7 +88,7 @@ void main() {
     );
 
     blocTest<MovieListCubit, MovieListState>(
-      'emits [MyState] when fetchMovies is called.',
+      'Given a repo that fails fetching genres emits [Loading, Failure] when fetchMovies is called.',
       build: () => MovieListCubit(
         movieRepo: MovieTmdbApiRepository(
           dataSource: MockTmdbApiDataSource(

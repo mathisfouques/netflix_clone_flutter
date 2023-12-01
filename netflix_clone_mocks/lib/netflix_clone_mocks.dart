@@ -1,5 +1,5 @@
 export '/mock/mock_tmdb_api_data_source.dart';
-export '/mock/mock_tmdb_api_repository.dart';
+export 'mock/mocked_values_for_tmdb_api_repository.dart';
 export '/mock/tmdb_api_results/get_genre_tv_list.dart';
 export '/mock/tmdb_api_results/get_genre_movie_list.dart';
 export '/mock/tmdb_api_results/movie_details/get_movie_details_for_movie_670292.dart';

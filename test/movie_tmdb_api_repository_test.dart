@@ -207,12 +207,11 @@ void main() {
           final repo = MovieTmdbApiRepository(dataSource: dataSourceAllWorking);
 
           final result = await repo.getMovieDetails(
-              forMovieId:
-                  MovieTmdbRepositoryMockedCorrectValues.correctMovieId);
+              forMovieId: MockedValuesForTmdbApiRepository.correctMovieId);
 
           expect(result.isRight, true);
           expect(result.right,
-              MovieTmdbRepositoryMockedCorrectValues.correctMovieDetails);
+              MockedValuesForTmdbApiRepository.correctMovieDetails);
         },
       );
 
@@ -224,8 +223,7 @@ void main() {
                   movieDetailsFailsWith: CustomDioException.badResponse()));
 
           final result = await repo.getMovieDetails(
-              forMovieId:
-                  MovieTmdbRepositoryMockedCorrectValues.correctMovieId);
+              forMovieId: MockedValuesForTmdbApiRepository.correctMovieId);
 
           expect(result.isRight, false);
           expect(result.left.runtimeType, MovieTmdbApiError);
@@ -259,18 +257,17 @@ void main() {
                 MovieTmdbApiRepository(dataSource: dataSourceAllWorking);
 
             final result = await repo.getMovieCredits(
-                forMovieId:
-                    MovieTmdbRepositoryMockedCorrectValues.correctMovieId);
+                forMovieId: MockedValuesForTmdbApiRepository.correctMovieId);
 
             expect(result.isRight, true);
             expect(result.right.popularActors.length, 3);
             expect(
               result.right.forMovieId,
-              MovieTmdbRepositoryMockedCorrectValues.correctMovieId,
+              MockedValuesForTmdbApiRepository.correctMovieId,
             );
 
-            expect(result.right,
-                MovieTmdbRepositoryMockedCorrectValues.correctCredits);
+            expect(
+                result.right, MockedValuesForTmdbApiRepository.correctCredits);
           },
         );
 
@@ -282,8 +279,7 @@ void main() {
                     movieCreditsFailsWith: CustomDioException.badResponse()));
 
             final result = await repo.getMovieCredits(
-                forMovieId:
-                    MovieTmdbRepositoryMockedCorrectValues.correctMovieId);
+                forMovieId: MockedValuesForTmdbApiRepository.correctMovieId);
 
             expect(result.isRight, false);
             expect(result.left.runtimeType, MovieTmdbApiError);
@@ -302,17 +298,16 @@ void main() {
           final repo = MovieTmdbApiRepository(dataSource: dataSourceAllWorking);
 
           final result = await repo.getMovieTrailers(
-              forMovieId:
-                  MovieTmdbRepositoryMockedCorrectValues.correctMovieId);
+              forMovieId: MockedValuesForTmdbApiRepository.correctMovieId);
 
           expect(result.isRight, true);
           expect(result.right.length,
-              MovieTmdbRepositoryMockedCorrectValues.correctTrailers.length);
+              MockedValuesForTmdbApiRepository.correctTrailers.length);
 
           // Test the equality on the whole list :
           bool forNowElementAreAllEqual = true;
           for (Trailer element
-              in MovieTmdbRepositoryMockedCorrectValues.correctTrailers) {
+              in MockedValuesForTmdbApiRepository.correctTrailers) {
             if (result.right.doesNotContain(element)) {
               // Entities extend Equatable
               forNowElementAreAllEqual = false;
@@ -329,8 +324,7 @@ void main() {
                     movieVideosFailsWith: CustomDioException.badResponse()));
 
             final result = await repo.getMovieTrailers(
-                forMovieId:
-                    MovieTmdbRepositoryMockedCorrectValues.correctMovieId);
+                forMovieId: MockedValuesForTmdbApiRepository.correctMovieId);
 
             expect(result.isRight, false);
             expect(result.left.runtimeType, MovieTmdbApiError);

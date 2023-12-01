@@ -1,4 +1,5 @@
 import 'package:either_dart/either.dart';
+import 'package:equatable/equatable.dart';
 
 import '../../data/tmdb_api/movie_tmdb_api_repository.dart';
 import '../data_protocols/movie_data_protocol.dart';
@@ -6,11 +7,14 @@ import '../entities/movie_details.dart';
 
 enum GetMovieDetailsErrorType { failingFetchingDetails, idMissmatch }
 
-class GetMovieDetailsError {
+class GetMovieDetailsError extends Equatable {
   final Object error;
   final GetMovieDetailsErrorType type;
 
-  GetMovieDetailsError({required this.error, required this.type});
+  const GetMovieDetailsError({required this.error, required this.type});
+
+  @override
+  List<Object?> get props => [type];
 }
 
 class GetMovieDetailsUseCase {
@@ -46,7 +50,6 @@ class GetMovieDetailsUseCase {
 
     final credits = await repo.getMovieCredits(forMovieId: movieId);
 
-    // TODO : Determine how to handle an error that is considered to be not really huge like this one.
     if (credits.isRight) {
       movieDetails = movieDetails.copyWith(credits: credits.right);
     }
