@@ -13,7 +13,7 @@ part 'tmdb_api_data_source.g.dart';
 abstract class TmdbApiDataSource {
   factory TmdbApiDataSource(Dio dio, {String baseUrl}) = _TmdbApiDataSource;
 
-  /// On with_genres, tmdb uses comma ( , ) for AND , pipe ( | ) for OR
+  /// On with_genres, tmdb uses comma ( , ) for AND , pipe ( | ) for OR.
   /// Can use ids instead of full string for genres.
   @GET('/discover/movie')
   Future<MovieListDto> getMovieList({

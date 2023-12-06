@@ -13,8 +13,6 @@ void main() {
   final correctId = MockedValuesForTmdbApiRepository.correctMovieId;
   final correctMovieDetails =
       MockedValuesForTmdbApiRepository.correctMovieDetails;
-  const fakeMovieDetails =
-      MovieDetails(title: "", description: "", genres: [], id: 3);
 
   group("[MOVIE_DETAILS_CUBIT]", () {
     blocTest<MovieDetailsCubit, MovieDetailsState>(
@@ -123,6 +121,27 @@ void main() {
           error: "error",
           type: GetMovieDetailsErrorType.idMissmatch,
         ))
+      ],
+    );
+
+    blocTest<MovieDetailsCubit, MovieDetailsState>(
+      'Given a bloc in a success movie state emits [Success] when dismiss is called.',
+      build: () => MovieDetailsCubit(
+          movieRepo: MovieTmdbApiRepository(
+              dataSource: const MockTmdbApiDataSource())),
+      seed: () => SuccessMovieDetails(movieDetails: correctMovieDetails),
+      act: (cubit) => cubit.dismiss(),
+      expect: () => <MovieDetailsState>[
+        SuccessMovieDetails(
+          movieDetails: correctMovieDetails
+            ..copyWith(
+              credits: MockedValuesForTmdbApiRepository.correctCredits,
+              trailers: MockedValuesForTmdbApiRepository.correctTrailers,
+              similarMovies:
+                  MockedValuesForTmdbApiRepository.correctSimilarMovies,
+            ),
+          isDismissed: true,
+        ),
       ],
     );
   });

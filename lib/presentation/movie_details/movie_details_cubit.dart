@@ -26,4 +26,13 @@ class MovieDetailsCubit extends Cubit<MovieDetailsState> {
       emit(FailureMovieDetails(error: result.left));
     }
   }
+
+  dismiss() {
+    if (state is SuccessMovieDetails) {
+      emit(SuccessMovieDetails(
+        movieDetails: (state as SuccessMovieDetails).movieDetails,
+        isDismissed: true,
+      ));
+    }
+  }
 }
