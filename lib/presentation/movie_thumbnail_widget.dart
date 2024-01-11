@@ -25,7 +25,6 @@ class MovieThumbnailWidget extends StatelessWidget {
           child: CachedNetworkImage(
             imageUrl: movieThumbnail.portraitSourceImage,
             errorWidget: (context, url, error) {
-              print(movieThumbnail.tmdbId);
               return Container(
                 color: Colors.green,
                 child: Text(
@@ -34,9 +33,7 @@ class MovieThumbnailWidget extends StatelessWidget {
                 ),
               );
             },
-            errorListener: (value) {
-              print(movieThumbnail);
-            },
+            errorListener: (value) {},
           ),
         ),
       ),

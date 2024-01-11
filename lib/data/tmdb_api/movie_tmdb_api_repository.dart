@@ -41,11 +41,11 @@ class MovieTmdbApiError implements MovieProtocolError {
 }
 
 class MovieTmdbApiRepository implements MovieDataProtocol {
-  final TmdbApiDataSource _dataSource;
+  final TmdbApiDataSource dataSource;
 
   MovieTmdbApiRepository({
-    required TmdbApiDataSource dataSource,
-  }) : _dataSource = dataSource;
+    required this.dataSource,
+  });
 
   final _imageBaseUrl = "https://image.tmdb.org/t/p/";
   final _posterDefaultSize = "w185";
@@ -88,7 +88,7 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
     }
 
     final Either<MovieTmdbApiError, MovieListDto> response = await safe(
-      _dataSource.getMovieList(
+      dataSource.getMovieList(
         pageNumber: 1,
         withGenres: forGenre.id.toString(),
       ),
@@ -142,7 +142,7 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
     final genres = <Genre>[];
 
     if (forType == GenreType.movie || forType == null) {
-      final moviesGenres = await safe(_dataSource.getGenreMovieList());
+      final moviesGenres = await safe(dataSource.getGenreMovieList());
       if (moviesGenres.isLeft) {
         return Left(moviesGenres.left);
       }
@@ -151,7 +151,7 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
           (dto) => Genre(id: dto.id, type: GenreType.movie, title: dto.name)));
     }
     if (forType == GenreType.tvShow || forType == null) {
-      final tvGenres = await safe(_dataSource.getGenreMovieList());
+      final tvGenres = await safe(dataSource.getGenreMovieList());
       if (tvGenres.isLeft) {
         return Left(MovieTmdbApiError(
           "Movie genres request failed",
@@ -173,7 +173,7 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
     required int forMovieId,
   }) async {
     final movieDetails = await safe(
-      _dataSource.getMovieDetails(movieId: forMovieId),
+      dataSource.getMovieDetails(movieId: forMovieId),
     );
     if (movieDetails.isLeft) {
       return Left(movieDetails.left);
@@ -195,6 +195,7 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
       genres: dto.genres.mapToList((genreDto) =>
           Genre(id: genreDto.id, type: GenreType.movie, title: genreDto.name)),
       releaseYear: DateTime.tryParse(dto.releaseDate)?.year,
+      duration: MovieDuration.fromMinutes(dto.runtime),
     ));
   }
 
@@ -202,8 +203,7 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
   Future<Either<MovieProtocolError, Credits>> getMovieCredits({
     required int forMovieId,
   }) async {
-    final credits =
-        await safe(_dataSource.getMovieCredits(movieId: forMovieId));
+    final credits = await safe(dataSource.getMovieCredits(movieId: forMovieId));
 
     if (credits.isLeft) {
       return Left(credits.left);
@@ -235,7 +235,7 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
     required int forMovieId,
   }) async {
     final movieVideos =
-        await safe(_dataSource.getMovieVideos(movieId: forMovieId));
+        await safe(dataSource.getMovieVideos(movieId: forMovieId));
 
     if (movieVideos.isLeft) {
       return Left(movieVideos.left);
@@ -264,8 +264,7 @@ class MovieTmdbApiRepository implements MovieDataProtocol {
       }
     }
 
-    final result =
-        await safe(_dataSource.getSimilarMovies(movieId: forMovieId));
+    final result = await safe(dataSource.getSimilarMovies(movieId: forMovieId));
 
     if (result.isLeft) {
       return Left(result.left);

@@ -39,7 +39,10 @@ class AppProviders extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => MovieListCubit(
-              movieRepo: MovieTmdbApiRepository(dataSource: mockedDataSource)),
+              movieRepo: MovieTmdbApiRepository(dataSource: mockedDataSource))
+            ..fetchMovies(
+                forGenres:
+                    MockTmdbApiDataSource.genresThatHaveAnApiResultMocked),
         ),
         BlocProvider(
           create: (context) => MovieDetailsCubit(

@@ -21,6 +21,7 @@ class MovieDetails extends Equatable {
   final String description;
   final List<Genre> genres;
   final int? releaseYear;
+  final MovieDuration duration;
   final int id;
   final Credits? credits;
   final List<Trailer>? trailers;
@@ -32,6 +33,7 @@ class MovieDetails extends Equatable {
     required this.description,
     required this.genres,
     this.releaseYear,
+    required this.duration,
     required this.id,
     this.credits,
     this.trailers,
@@ -44,6 +46,7 @@ class MovieDetails extends Equatable {
         description,
         genres,
         releaseYear,
+        duration,
         id,
         credits,
         trailers,
@@ -60,6 +63,7 @@ class MovieDetails extends Equatable {
     String? description,
     List<Genre>? genres,
     int? releaseYear,
+    MovieDuration? duration,
     int? id,
     Credits? credits,
     List<Trailer>? trailers,
@@ -70,10 +74,24 @@ class MovieDetails extends Equatable {
       description: description ?? this.description,
       genres: genres ?? this.genres,
       releaseYear: releaseYear ?? this.releaseYear,
+      duration: duration ?? this.duration,
       id: id ?? this.id,
       credits: credits ?? this.credits,
       trailers: trailers ?? this.trailers,
       similarMovies: similarMovies ?? this.similarMovies,
     );
+  }
+}
+
+class MovieDuration {
+  final int rawMinuteDuration;
+  final String representation;
+
+  MovieDuration(this.rawMinuteDuration, this.representation);
+
+  factory MovieDuration.fromMinutes(int minutes) {
+    final rep = "${minutes ~/ 60}h ${minutes % 60}m";
+
+    return MovieDuration(minutes, rep);
   }
 }

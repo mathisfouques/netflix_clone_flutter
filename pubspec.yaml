@@ -18,6 +18,7 @@ dependencies:
   cached_network_image: ^3.3.0
   gap: ^3.0.1
   either_dart: ^1.0.0
+  cupertino_icons: any
 
   # Modules of this app
   netflix_clone_mocks:
@@ -39,8 +40,13 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
 
-  # fonts:
-  #   - family: Schyler
+  fonts:
+    - family: BebasNeue
+      fonts:
+        - asset: assets/fonts/BebasNeue.otf
+    - family: NetflixSans-Regular
+      fonts:
+        - asset: assets/fonts/NetflixSans-Regular.otf
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf

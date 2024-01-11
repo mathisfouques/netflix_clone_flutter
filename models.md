@@ -119,6 +119,10 @@ The list of movie videos of type Trailer and coming from youtube
 
 A list of MovieThumbnails that are similar to the movie.
 
+9. Duration? duration
+
+The duration of the movie in the date time format from dart.
+
 ## Credits
 
 ### Description

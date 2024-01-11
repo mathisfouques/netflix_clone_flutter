@@ -43,6 +43,7 @@ abstract class MockedValuesForTmdbApiRepository {
             (dto) => Genre(id: dto.id, type: GenreType.movie, title: dto.name)),
         releaseYear:
             DateTime.tryParse(correctMovieDetailsDto.releaseDate)?.year,
+        duration: MovieDuration.fromMinutes(correctMovieDetailsDto.runtime),
       );
 
   final correctCreditsDto =
@@ -74,4 +75,12 @@ abstract class MockedValuesForTmdbApiRepository {
       portraitSourceImage: _imageBaseUrl + _posterDefaultSize + dto.posterPath,
     ),
   );
+
+  static MovieDetails get correctMovieDetailsWithAllParameters =>
+      correctMovieDetails
+        ..copyWith(
+          similarMovies: correctSimilarMovies,
+          credits: correctCredits,
+          trailers: correctTrailers,
+        );
 }

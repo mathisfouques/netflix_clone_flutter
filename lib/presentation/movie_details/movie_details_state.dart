@@ -25,6 +25,15 @@ class SuccessMovieDetails extends MovieDetailsState {
     ..addAll([
       isDismissed
     ]); // TODO: add movieDetails, but tests gets broken... Wrong mocked values.
+
+  SuccessMovieDetails copyWith({
+    MovieDetails? movieDetails,
+    bool? isDismissed,
+  }) =>
+      SuccessMovieDetails(
+        movieDetails: movieDetails ?? this.movieDetails,
+        isDismissed: isDismissed ?? this.isDismissed,
+      );
 }
 
 class FailureMovieDetails extends MovieDetailsState {

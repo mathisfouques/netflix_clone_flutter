@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:netflix_clone_mocks/mock/mock_tmdb_api_data_source.dart';
 
-import '../colors.dart';
+import '../nflx_theme.dart';
 import 'category_movies_list.dart';
 import 'movie_list_cubit/movie_list_cubit.dart';
 
@@ -19,9 +18,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: UiColors.darkGrey,
-      body: BlocBuilder<MovieListCubit, MovieListState>(
-          builder: (context, state) {
+      backgroundColor: NflxColors.darkGrey,
+      body: BlocConsumer<MovieListCubit, MovieListState>(
+          listener: (context, state) {
+        if (state is FailureFetchingMovieList) {
+          print(state.error);
+        }
+      }, builder: (context, state) {
         switch (state) {
           case SuccessFetchingMovieList():
             return CategoryMoviesListView(categories: state.categories);
@@ -37,11 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
               style: const TextStyle(color: Colors.white),
             ));
           default:
-            if (state is MovieListInitial) {
-              context.read<MovieListCubit>().fetchMovies(
-                  forGenres:
-                      MockTmdbApiDataSource.genresThatHaveAnApiResultMocked);
-            }
             return Container();
         }
       }),

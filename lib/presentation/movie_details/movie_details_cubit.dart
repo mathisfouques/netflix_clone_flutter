@@ -15,6 +15,11 @@ class MovieDetailsCubit extends Cubit<MovieDetailsState> {
   }) : super(MovieDetailsInitial());
 
   fetchMovieDetails({required int forMovieId}) async {
+    if (state is SuccessMovieDetails &&
+        (state as SuccessMovieDetails).isDismissed) {
+      emit((state as SuccessMovieDetails).copyWith(isDismissed: false));
+      return;
+    }
     emit(LoadingMovieDetails());
 
     final result =
@@ -29,10 +34,7 @@ class MovieDetailsCubit extends Cubit<MovieDetailsState> {
 
   dismiss() {
     if (state is SuccessMovieDetails) {
-      emit(SuccessMovieDetails(
-        movieDetails: (state as SuccessMovieDetails).movieDetails,
-        isDismissed: true,
-      ));
+      emit((state as SuccessMovieDetails).copyWith(isDismissed: true));
     }
   }
 }

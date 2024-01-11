@@ -1,7 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:netflix_clone/data/tmdb_api/movie_tmdb_api_repository.dart';
-import 'package:netflix_clone/domain/entities/movie_details.dart';
 import 'package:netflix_clone/domain/use_case/get_movie_details.dart';
 
 import 'package:netflix_clone/presentation/movie_details/movie_details_cubit.dart';
